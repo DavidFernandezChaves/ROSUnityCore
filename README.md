@@ -1,4 +1,4 @@
-# ROSUnity Core
+# ROSUnity
 This is a library to connect [Unity](https://unity.com/) to [ROS](https://www.ros.org/) by websocket protocol.
 
 ## Requirements
