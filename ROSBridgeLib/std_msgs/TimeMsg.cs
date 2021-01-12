@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Text;
-using SimpleJSON;
+﻿using SimpleJSON;
 
 /**
  * Define a time message. These have been hand-crafted from the corresponding msg file.
@@ -14,39 +12,42 @@ using SimpleJSON;
  * @version 3.1
  */
 
-namespace ROSBridgeLib {
-	namespace std_msgs {
-		public class TimeMsg : ROSBridgeMsg {
-			private int _secs, _nsecs;
+namespace ROSUnityCore {
+	namespace ROSBridgeLib {
+		namespace std_msgs {
 
-			public TimeMsg(JSONNode msg) {
-				_secs = int.Parse(msg["secs"]);
-				_nsecs = int.Parse (msg["nsecs"]);
-			}
+			public class TimeMsg : ROSBridgeMsg {
+				private int _secs, _nsecs;
 
-			public TimeMsg(int secs, int nsecs) {
-				_secs = secs;
-				_nsecs = nsecs;
-			}
+				public TimeMsg(JSONNode msg) {
+					_secs = int.Parse(msg["secs"]);
+					_nsecs = int.Parse(msg["nsecs"]);
+				}
 
-			public static string GetMessageType() {
-				return "std_msgs/Time";
-			}
+				public TimeMsg(int secs, int nsecs) {
+					_secs = secs;
+					_nsecs = nsecs;
+				}
 
-			public int GetSecs() {
-				return _secs;
-			}
+				public static string GetMessageType() {
+					return "std_msgs/Time";
+				}
 
-			public int GetNsecs() {
-				return _nsecs;
-			}
+				public int GetSecs() {
+					return _secs;
+				}
 
-			public override string ToString() {
-				return "Time [secs=" + _secs + ",  nsecs=" + _nsecs + "]";
-			}
+				public int GetNsecs() {
+					return _nsecs;
+				}
 
-			public override string ToYAMLString() {
-				return "{\"data\" : {\"secs\" : " + _secs + ", \"nsecs\" : " + _nsecs + "}}";
+				public override string ToString() {
+					return "Time [secs=" + _secs + ",  nsecs=" + _nsecs + "]";
+				}
+
+				public override string ToYAMLString() {
+					return "{\"data\" : {\"secs\" : " + _secs + ", \"nsecs\" : " + _nsecs + "}}";
+				}
 			}
 		}
 	}

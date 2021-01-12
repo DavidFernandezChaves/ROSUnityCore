@@ -1,57 +1,48 @@
 ﻿using SimpleJSON;
-using ROSBridgeLib.std_msgs;
-using UnityEngine;
+using ROSUnityCore.ROSBridgeLib.std_msgs;
 
-namespace ROSBridgeLib
-{
-    namespace geometry_msgs
-    {
-        public class PoseStampedMsg : ROSBridgeMsg
-        {
-            private HeaderMsg _header;
-            private PoseMsg _pose;
+namespace ROSUnityCore {
+    namespace ROSBridgeLib {
+        namespace geometry_msgs {
 
-            public PoseStampedMsg(JSONNode msg)
-            {
-                _header = new HeaderMsg(msg["header"]);
-                _pose = new PoseMsg(msg["pose"]);
-            }
+            public class PoseStampedMsg : ROSBridgeMsg {
+                private HeaderMsg _header;
+                private PoseMsg _pose;
 
-            public PoseStampedMsg(HeaderMsg header, PoseMsg pose)
-            {
-                _header = header;
-                _pose = pose;
-            }
+                public PoseStampedMsg(JSONNode msg) {
+                    _header = new HeaderMsg(msg["header"]);
+                    _pose = new PoseMsg(msg["pose"]);
+                }
 
-            public static string GetMessageType()
-            {
-                return "geometry_msgs/PoseStamped";
-            }
+                public PoseStampedMsg(HeaderMsg header, PoseMsg pose) {
+                    _header = header;
+                    _pose = pose;
+                }
 
-            public HeaderMsg GetHeader()
-            {
-                return _header;
-            }
+                public static string GetMessageType() {
+                    return "geometry_msgs/PoseStamped";
+                }
 
-            public PoseMsg GetPose()
-            {
-                return _pose;
-            }
+                public HeaderMsg GetHeader() {
+                    return _header;
+                }
 
-            public bool Equals(PoseStampedMsg other)
-            {
-                if (other == null) return false;
-                return (this._header.GetSeq().Equals(other._header.GetSeq()));
-            }
+                public PoseMsg GetPose() {
+                    return _pose;
+                }
 
-            public override string ToString()
-            {
-                return "PoseStamped [header=" + _header.ToString() + ",  pose=" + _pose.ToString() + "]";
-            }
+                public bool Equals(PoseStampedMsg other) {
+                    if (other == null) return false;
+                    return (this._header.GetSeq().Equals(other._header.GetSeq()));
+                }
 
-            public override string ToYAMLString()
-            {
-                return "{\"header\" : " + _header.ToYAMLString() + ", \"pose\" : " + _pose.ToYAMLString() + "}";
+                public override string ToString() {
+                    return "PoseStamped [header=" + _header.ToString() + ",  pose=" + _pose.ToString() + "]";
+                }
+
+                public override string ToYAMLString() {
+                    return "{\"header\" : " + _header.ToYAMLString() + ", \"pose\" : " + _pose.ToYAMLString() + "}";
+                }
             }
         }
     }

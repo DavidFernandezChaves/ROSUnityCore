@@ -1,7 +1,5 @@
-﻿using ROSBridgeLib.nav_msgs;
+﻿using ROSUnityCore.ROSBridgeLib.nav_msgs;
 using UnityEngine;
-using ROSBridgeLib.geometry_msgs;
-//using Pathfinding;
 
 public class TerrainConstructor : MonoBehaviour {
     public float _erode = 0.5f;
@@ -26,7 +24,7 @@ public class TerrainConstructor : MonoBehaviour {
         int _width = (int) (metaData.Getwidth());
         int _height = (int) (metaData.Getheight());
 
-        _originPosition = msg.GetInfo().GetOrigin().GetTranslationUnity();
+        _originPosition = msg.GetInfo().GetOrigin().GetPositionUnity();
 
         td = new TerrainData();
         if (_width > _height)

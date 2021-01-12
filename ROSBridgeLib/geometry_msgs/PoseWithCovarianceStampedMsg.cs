@@ -1,50 +1,43 @@
 ﻿using SimpleJSON;
-using ROSBridgeLib.std_msgs;
+using ROSUnityCore.ROSBridgeLib.std_msgs;
 
-namespace ROSBridgeLib
-{
-	namespace geometry_msgs
-	{
-		public class PoseWithCovarianceStampedMsg : ROSBridgeMsg
-		{
-			private HeaderMsg _header;
-			private PoseWithCovarianceMsg _pose;
+namespace ROSUnityCore {
+	namespace ROSBridgeLib {
+		namespace geometry_msgs {
 
-			public PoseWithCovarianceStampedMsg(JSONNode msg)
-			{
-				_header = new HeaderMsg (msg ["header"]);
-				_pose = new PoseWithCovarianceMsg(msg["pose"]);
-			}
+			public class PoseWithCovarianceStampedMsg : ROSBridgeMsg {
+				private HeaderMsg _header;
+				private PoseWithCovarianceMsg _pose;
 
-			public PoseWithCovarianceStampedMsg(HeaderMsg header, PoseWithCovarianceMsg pose)
-			{
-				_header = header;
-				_pose = pose;
-			}
+				public PoseWithCovarianceStampedMsg(JSONNode msg) {
+					_header = new HeaderMsg(msg["header"]);
+					_pose = new PoseWithCovarianceMsg(msg["pose"]);
+				}
 
-			public static string GetMessageType()
-			{
-				return "geometry_msgs/PoseWithCovarianceStamped";
-			}
+				public PoseWithCovarianceStampedMsg(HeaderMsg header, PoseWithCovarianceMsg pose) {
+					_header = header;
+					_pose = pose;
+				}
 
-			public HeaderMsg GetHeader()
-			{
-				return _header;
-			}
+				public static string GetMessageType() {
+					return "geometry_msgs/PoseWithCovarianceStamped";
+				}
 
-			public PoseWithCovarianceMsg GetPose()
-			{
-				return _pose;
-			}
+				public HeaderMsg GetHeader() {
+					return _header;
+				}
 
-			public override string ToString()
-			{
-				return "PoseWithCovarianceStamped [header=" + _header.ToString() + ",  pose=" + _pose.ToString() + "]";
-			}
+				public PoseWithCovarianceMsg GetPose() {
+					return _pose;
+				}
 
-			public override string ToYAMLString()
-			{
-				return "{\"header\" : " + _header.ToYAMLString() + ", \"pose\" : " + _pose.ToYAMLString() + "}";
+				public override string ToString() {
+					return "PoseWithCovarianceStamped [header=" + _header.ToString() + ",  pose=" + _pose.ToString() + "]";
+				}
+
+				public override string ToYAMLString() {
+					return "{\"header\" : " + _header.ToYAMLString() + ", \"pose\" : " + _pose.ToYAMLString() + "}";
+				}
 			}
 		}
 	}

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using SimpleJSON;
-
-/**
+﻿/**
  * This defines a publisher. There had better be a corresponding subscriber somewhere. This is really
  * just a holder for the message topic and message type.
  * 
@@ -13,20 +10,21 @@ using SimpleJSON;
  * @author Michael Jenkin, Robert Codd-Downey and Andrew Speers
  * @version 3.1
  */
+namespace ROSUnityCore {
+	namespace ROSBridgeLib {
+		public class ROSBridgePublisher {
 
-namespace ROSBridgeLib {
-	public class ROSBridgePublisher {
-		
-		public static string GetMessageTopic() {
-			return null;
-		}  
-		
-		public static string GetMessageType() {
-			return null;
-		}
+			public static string GetMessageTopic() {
+				return null;
+			}
 
-		public static string ToYAMLString() {
-			return null;
+			public static string GetMessageType() {
+				return null;
+			}
+
+			public static string ToYAMLString() {
+				return null;
+			}
 		}
 	}
 }

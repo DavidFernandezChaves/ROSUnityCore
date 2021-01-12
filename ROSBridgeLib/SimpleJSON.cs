@@ -48,10 +48,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
- 
- 
-namespace SimpleJSON
-{
+
+namespace SimpleJSON{
+        
     public enum JSONBinaryTag
     {
         Array            = 1,

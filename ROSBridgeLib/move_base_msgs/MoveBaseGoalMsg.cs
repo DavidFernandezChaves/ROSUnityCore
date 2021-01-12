@@ -1,41 +1,36 @@
 ﻿using SimpleJSON;
-using ROSBridgeLib.geometry_msgs;
-namespace ROSBridgeLib
-{
-    namespace move_base_msgs
-    {
-        public class MoveBaseGoalMsg : ROSBridgeMsg
-        {
-            private PoseStampedMsg _target_pose;
+using ROSUnityCore.ROSBridgeLib.geometry_msgs;
 
-            public MoveBaseGoalMsg(JSONNode msg)
-            {
-                _target_pose = new PoseStampedMsg(msg["target_pose"]);
-            }
+namespace ROSUnityCore {
+    namespace ROSBridgeLib {
+        namespace move_base_msgs {
 
-            public MoveBaseGoalMsg(PoseStampedMsg target_pose)
-            {
-                _target_pose = target_pose;
-            }
+            public class MoveBaseGoalMsg : ROSBridgeMsg {
+                private PoseStampedMsg _target_pose;
 
-            public static string GetMessageType()
-            {
-                return "move_base_msgs/MoveBaseGoal";
-            }
+                public MoveBaseGoalMsg(JSONNode msg) {
+                    _target_pose = new PoseStampedMsg(msg["target_pose"]);
+                }
 
-            public PoseStampedMsg GetTarget_pose()
-            {
-                return _target_pose;
-            }
+                public MoveBaseGoalMsg(PoseStampedMsg target_pose) {
+                    _target_pose = target_pose;
+                }
 
-            public override string ToString()
-            {
-                return "MoveBaseGoal [target_pose=" + _target_pose.ToString() + "]";
-            }
+                public static string GetMessageType() {
+                    return "move_base_msgs/MoveBaseGoal";
+                }
 
-            public override string ToYAMLString()
-            {
-                return "{\"target_pose\" : " + _target_pose.ToYAMLString() + "}";
+                public PoseStampedMsg GetTarget_pose() {
+                    return _target_pose;
+                }
+
+                public override string ToString() {
+                    return "MoveBaseGoal [target_pose=" + _target_pose.ToString() + "]";
+                }
+
+                public override string ToYAMLString() {
+                    return "{\"target_pose\" : " + _target_pose.ToYAMLString() + "}";
+                }
             }
         }
     }

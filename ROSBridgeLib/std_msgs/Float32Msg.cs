@@ -1,34 +1,35 @@
-﻿using System.Collections;
-using System.Text;
-using SimpleJSON;
+﻿using SimpleJSON;
 
-namespace ROSBridgeLib {
-	namespace std_msgs {
-		public class Float32Msg : ROSBridgeMsg {
-			private float _data;
+namespace ROSUnityCore {
+	namespace ROSBridgeLib {
+		namespace std_msgs {
 
-			public Float32Msg(JSONNode msg) {
-				_data = msg["data"].AsFloat;
-			}
+			public class Float32Msg : ROSBridgeMsg {
+				private float _data;
 
-			public Float32Msg(float data) {
-				_data = data;
-			}
+				public Float32Msg(JSONNode msg) {
+					_data = msg["data"].AsFloat;
+				}
 
-			public static string GetMessageType() {
-				return "std_msgs/Float32";
-			}
+				public Float32Msg(float data) {
+					_data = data;
+				}
 
-			public float GetData() {
-				return _data;
-			}
+				public static string GetMessageType() {
+					return "std_msgs/Float32";
+				}
 
-			public override string ToString() {
-				return "Float32 [data=" + _data.ToString("N",System.Globalization.CultureInfo.InvariantCulture)  + "]";
-			}
+				public float GetData() {
+					return _data;
+				}
 
-			public override string ToYAMLString() {
-				return "Float32 [data=" + _data.ToString("N",System.Globalization.CultureInfo.InvariantCulture)  + "]";
+				public override string ToString() {
+					return "Float32 [data=" + _data.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + "]";
+				}
+
+				public override string ToYAMLString() {
+					return "{\"data\" : " + _data.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + "}";
+				}
 			}
 		}
 	}

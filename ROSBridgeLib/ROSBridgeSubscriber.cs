@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using SimpleJSON;
+﻿using SimpleJSON;
 
 /**
  * This defines a subscriber. Subscribers listen to publishers in ROS. Now if we could have inheritance
@@ -17,26 +16,26 @@ using SimpleJSON;
  * @author Michael Jenkin, Robert Codd-Downey and Andrew Speers
  * @version 3.1
  */
+namespace ROSUnityCore {
+	namespace ROSBridgeLib {
+		public class ROSBridgeSubscriber {
 
-namespace ROSBridgeLib {
-	public class ROSBridgeSubscriber {
+			public static string GetMessageTopic() {
+				return null;
+			}
 
-		public static string GetMessageTopic() {
-			return null;
-		}  
+			public static string GetMessageType() {
+				return null;
+			}
 
-		public static string GetMessageType() {
-			return null;
+			public static ROSBridgeMsg ParseMessage(JSONNode msg) {
+				return null;
+			}
+
+			public static void CallBack(ROSBridgeMsg msg, string host) {
+			}
+
 		}
-
-		public static ROSBridgeMsg ParseMessage(JSONNode msg) {
-			return null;
-		}
-
-        public static void CallBack(ROSBridgeMsg msg,string host)
-        {
-        }
-
 	}
-}
 
+}
