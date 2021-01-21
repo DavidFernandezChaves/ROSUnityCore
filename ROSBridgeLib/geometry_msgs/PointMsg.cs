@@ -22,10 +22,16 @@ namespace ROSUnityCore {
 					_z = z;
 				}
 
-				public PointMsg(Vector3 point) {
-					_x = point.x;
-					_y = point.y;
-					_z = point.z;
+				public PointMsg(Vector3 point, bool fromUnity = false) {
+                    if (fromUnity) {
+						_x = point.x;
+						_y = point.z;
+						_z = point.y;
+					} else {
+						_x = point.x;
+						_y = point.y;
+						_z = point.z;
+					}
 				}
 
 				public static string GetMessageType() {

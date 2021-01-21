@@ -37,6 +37,10 @@ namespace ROSUnityCore {
 					return "std_msgs/Header";
 				}
 
+				public void SetSeq(int value) {
+					_seq = value;
+                }
+
 				public int GetSeq() {
 					return _seq;
 				}

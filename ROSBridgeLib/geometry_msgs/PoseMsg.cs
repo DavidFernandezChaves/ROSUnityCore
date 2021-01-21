@@ -6,29 +6,28 @@ namespace ROSUnityCore {
 		namespace geometry_msgs {
 
 			public class PoseMsg : ROSBridgeMsg {
-				private PointMsg _position;
-				private QuaternionMsg _orientation;
+				private PointMsg position;
+				private QuaternionMsg orientation;
 
 				public PoseMsg(JSONNode msg) {
-					_position = new PointMsg(msg["position"]);
-					_orientation = new QuaternionMsg(msg["orientation"]);
+					position = new PointMsg(msg["position"]);
+					orientation = new QuaternionMsg(msg["orientation"]);
 				}
 
-				public PoseMsg(PointMsg translation, QuaternionMsg rotation) {
-					_position = translation;
-					_orientation = rotation;
+				public PoseMsg(PointMsg _translation, QuaternionMsg _rotation) {
+					position = _translation;
+					orientation = _rotation;
 				}
 
-				public PoseMsg(Transform tf) {
-					Vector3 position = tf.position;
-					Vector3 orientation = tf.rotation.eulerAngles;
-					_position = new PointMsg(position.x, position.z, position.y);
-					_orientation = new QuaternionMsg(tf.localRotation, true);
+				public PoseMsg(Transform _tf) {
+					this.position = new PointMsg(_tf.position, true);
+					this.orientation = new QuaternionMsg(_tf.localRotation, true);
 				}
 
-				public PoseMsg(Vector3 position, Quaternion orientation) {
-					_position = new PointMsg(position);
-					_orientation = new QuaternionMsg(orientation);
+				public PoseMsg(Vector3 _position, Quaternion _orientation, bool _fromUnity = false) {
+					position = new PointMsg(_position, _fromUnity);
+					orientation = new QuaternionMsg(_orientation, _fromUnity);
+									
 				}
 
 				public static string GetMessageType() {
@@ -36,29 +35,29 @@ namespace ROSUnityCore {
 				}
 
 				public PointMsg GetTranslation() {
-					return _position;
+					return position;
 				}
 
 
 				public QuaternionMsg GetRotation() {
-					return _orientation;
+					return orientation;
 				}
 
 				public Vector3 GetPositionUnity() {
-					Vector3 p = _position.GetPoint();
+					Vector3 p = position.GetPoint();
 					return new Vector3(p.x, p.z, p.y);
 				}
 
 				public Quaternion GetRotationUnity() {
-					return _orientation.GetQuaternionUnity();
+					return orientation.GetQuaternionUnity();
 				}
 
 				public override string ToString() {
-					return "Pose [position=" + _position.ToString() + ",  orientation=" + _orientation.ToString() + "]";
+					return "Pose [position=" + position.ToString() + ",  orientation=" + orientation.ToString() + "]";
 				}
 
 				public override string ToYAMLString() {
-					return "{\"position\" : " + _position.ToYAMLString() + ", \"orientation\" : " + _orientation.ToYAMLString() + "}";
+					return "{\"position\" : " + position.ToYAMLString() + ", \"orientation\" : " + orientation.ToYAMLString() + "}";
 				}
 			}
 		}
