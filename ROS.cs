@@ -2,6 +2,7 @@
 using ROSUnityCore.ROSBridgeLib;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace ROSUnityCore {
 
@@ -9,14 +10,13 @@ namespace ROSUnityCore {
 
         public static string pathClass = "ROSUnityCore.";
 
+        public int verbose;
         public string ip = "ws://localhost";
         public int pot = 9090;
         public bool viewfinder = false;
         public bool autoConnect = false;
-        public bool debug = false;
         public List<string> subPackages;
         public List<string> pubPackages;
-        public DateTime epochStart { get; private set; }
         public ROSBridgeWebSocketConnection ros { get; private set; }
 
         #region Unity Functions
@@ -52,11 +52,11 @@ namespace ROSUnityCore {
         }
 
         public void Connect() {
-            epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             ros = new ROSBridgeWebSocketConnection(ip, pot);
-            ros.SetDebug(debug);
-            if (debug)
-                Log("Connected");
+            if (verbose > 1) {
+                ros.SetDebug(true);
+            }
+
             try {
                 ros.Connect();
             } catch {
@@ -64,8 +64,7 @@ namespace ROSUnityCore {
                 Destroy(this.gameObject);
             }
 
-            transform.name = ip;
-            Invoke("InitialPackage", 0.5f);
+            StartCoroutine(InitialPackage());
         }
 
         public void Subcribe(Type _package, int frecuency) {
@@ -97,42 +96,52 @@ namespace ROSUnityCore {
         }
 
         public bool IsConnected() {
-            return (ros != null);
+            return (ros._connected);
         }
          
         #endregion
 
         #region Private Functions
-        void InitialPackage() {
+        private IEnumerator InitialPackage() {
+            yield return new WaitForEndOfFrame();
+
             foreach (string _package in subPackages) {
                 try {                    
                     ros.AddSubscriberOnline(Type.GetType(pathClass+_package));
+                    Log(_package + " has been registered as a subcriber.");
                 } catch {
                     LogWarning(_package + " could not be registered.");
                 }
             }
 
             foreach (string _package in pubPackages) {
-                //try { 
-                ros.AddPublisherOnline(Type.GetType(pathClass+_package));
-                //} catch {
-                //    LogWarning(type + " could not be registered.");
-                //}
+                try {
+                    ros.AddPublisherOnline(Type.GetType(pathClass + _package));
+                    Log(_package + " has been registered as a publisher.");
+                } catch {
+                    LogWarning(_package + " could not be registered.");
+                }
             }
 
+            while (!ros._connected) {
+                yield return new WaitForEndOfFrame();
+            }
+            Log("Connected");
             gameObject.SendMessage("Connected", SendMessageOptions.DontRequireReceiver);
+
         }
 
+
+
         private void Log(string _msg) {
-            if (!debug) return;
-            Debug.Log("[ROS-" + ip + "]: " + _msg);
+            if (verbose > 1)
+                Debug.Log("[ROS-" + ip + "]: " + _msg);
         }
 
         private void LogWarning(string _msg) {
-            if (!debug) return;
-            Debug.LogWarning("[ROS-" + ip + "]: " + _msg);
+            if (verbose > 0)
+                Debug.LogWarning("[ROS-" + ip + "]: " + _msg);
         }
-
         #endregion
     }
 

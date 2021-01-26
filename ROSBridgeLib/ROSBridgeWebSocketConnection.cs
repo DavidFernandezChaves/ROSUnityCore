@@ -29,6 +29,9 @@ using UnityEngine;
 namespace ROSUnityCore {
 	namespace ROSBridgeLib {
 		public class ROSBridgeWebSocketConnection {
+
+			public bool _connected { get; private set; }
+
 			private class RenderTask {
 				private Type _subscriber;
 				private string _topic;
@@ -63,6 +66,7 @@ namespace ROSUnityCore {
 			private string _serviceValues = null;
 			private List<RenderTask> _taskQ = new List<RenderTask>();
 			private bool _debug = false;
+			
 
 			private object _queueLock = new object();
 
@@ -180,6 +184,7 @@ namespace ROSUnityCore {
 			 */
 			public void Disconnect() {
 				_myThread.Abort();
+				_connected = false;
 				foreach (Type p in _subscribers) {
 					_ws.Send(ROSBridgeMsg.UnSubscribe(GetMessageTopic(p)));
 					//Debug.Log ("Sending " + ROSBridgePacket.unSubscribe(getMessageTopic(p)));
@@ -215,6 +220,7 @@ namespace ROSUnityCore {
 			}
 
 			private void OnMessage(string s) {
+				_connected = true;
 				if (_debug)
 					Debug.Log("Got a message " + s);
 				if ((s != null) && !s.Equals("")) {

@@ -1,6 +1,7 @@
 ﻿using ROSUnityCore;
 using ROSUnityCore.ROSBridgeLib.sensor_msgs;
 using ROSUnityCore.ROSBridgeLib.std_msgs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -49,7 +50,7 @@ public class LaserScanner : MonoBehaviour {
         while (Application.isPlaying) {
             if (ros.IsConnected()) {
                 MeasureDistance();
-                HeaderMsg _head = new HeaderMsg(0, new TimeMsg(ros.epochStart.Second, 0), transform.name);
+                HeaderMsg _head = new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0), transform.name);
                 LaserScanMsg scan = new LaserScanMsg(_head, angle_min, angle_max, angle_increment, time_increment, scan_time, range_min, range_max, ranges, intensities);
                 ros.Publish(LaserScan_pub.GetMessageTopic(), scan);
 
