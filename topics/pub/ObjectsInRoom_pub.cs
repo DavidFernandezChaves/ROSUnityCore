@@ -1,18 +1,18 @@
 ﻿using ROSUnityCore.ROSBridgeLib;
-using ROSUnityCore.ROSBridgeLib.semantic_mapping;
+using ROSUnityCore.ROSBridgeLib.ViMantic_msgs;
 
 namespace ROSUnityCore {
     public class ObjectsInRoom_pub : ROSBridgePublisher {
 
         public new static string GetMessageTopic() {
-            return "/vimantic/object_in_room";
+            return "/ViMantic/objectsInRoom";
         }
 
         public new static string GetMessageType() {
-            return "vimantic/SemanticObjects";
+            return "vimantic/SemanticObjectArray";
         }
 
-        public static string ToYAMLString(SemanticObjectsMsg msg) {
+        public static string ToYAMLString(SemanticObjectArrayMsg msg) {
             return msg.ToYAMLString();
         }
 

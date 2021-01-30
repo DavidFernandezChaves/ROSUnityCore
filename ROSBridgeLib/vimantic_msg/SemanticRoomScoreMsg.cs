@@ -1,11 +1,13 @@
-﻿using SimpleJSON;
-using System;
+﻿using System;
+using SimpleJSON;
+using ROSUnityCore.ROSBridgeLib.std_msgs;
 
 namespace ROSUnityCore {
     namespace ROSBridgeLib {
-        namespace semantic_mapping {
+        namespace ViMantic_msgs {
 
             public class SemanticRoomScoreMsg : ROSBridgeMsg {
+
                 private String _type;
                 private double _score;
 

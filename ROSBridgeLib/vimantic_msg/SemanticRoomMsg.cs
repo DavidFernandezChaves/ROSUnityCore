@@ -4,7 +4,7 @@ using System;
 
 namespace ROSUnityCore {
     namespace ROSBridgeLib {
-        namespace semantic_mapping {
+        namespace ViMantic_msgs {
 
             public class SemanticRoomMsg : ROSBridgeMsg {
                 private HeaderMsg _header;

@@ -290,8 +290,7 @@ namespace ROSUnityCore {
 				if (_ws != null) {
 					string s = ROSBridgeMsg.Publish(topic, msg.ToYAMLString());
 					if (_debug)
-						Debug.Log(s);
-					//Debug.Log ("Sending " + s);
+						Debug.Log ("Sending " + s);
 					_ws.Send(s);
 				}
 			}

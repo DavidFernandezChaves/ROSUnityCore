@@ -18,7 +18,12 @@ namespace ROSUnityCore {
 
 				public PoseWithCovarianceMsg(PoseMsg pose, double[] covariance) {
 					_pose = pose;
-					_covariance = covariance;
+
+					if(covariance.Length == 36) {
+						_covariance = covariance;
+					} else {
+						_covariance = new double[36];
+                    }					
 				}
 
 				public static string GetMessageType() {

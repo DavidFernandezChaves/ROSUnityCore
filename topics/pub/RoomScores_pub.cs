@@ -1,11 +1,11 @@
 ﻿using ROSUnityCore.ROSBridgeLib;
-using ROSUnityCore.ROSBridgeLib.semantic_mapping;
+using ROSUnityCore.ROSBridgeLib.ViMantic_msgs;
 
 namespace ROSUnityCore {
     public class RoomScores_pub : ROSBridgePublisher {
 
         public new static string GetMessageTopic() {
-            return "/vimantic/room_scores";
+            return "/ViMantic/room_scores";
         }
 
         public new static string GetMessageType() {

@@ -1,25 +1,25 @@
 ﻿using ROSUnityCore.ROSBridgeLib;
 using UnityEngine;
 using SimpleJSON;
-using ROSUnityCore.ROSBridgeLib.semantic_mapping;
+using ROSUnityCore.ROSBridgeLib.ViMantic_msgs;
 
 namespace ROSUnityCore {
-    public class Semantic_mapping_sub : ROSBridgeSubscriber {
+    public class Vimantic_SemanticObjects_sub : ROSBridgeSubscriber {
 
         public new static string GetMessageTopic() {
-            return "/vimantic/SemanticObjects";
+            return "/ViMantic/SemanticObjects";
         }
 
         public new static string GetMessageType() {
-            return "vimantic/SemanticObjects";
+            return "vimantic/SemanticObjectArray";
         }
 
         public new static ROSBridgeMsg ParseMessage(JSONNode msg) {
-            return new SemanticObjectsMsg(msg);
+            return new SemanticObjectArrayMsg(msg);
         }
 
         public new static void CallBack(ROSBridgeMsg msg, string host) {
-            Object.FindObjectOfType<ObjectManager>().DetectedObject((SemanticObjectsMsg)msg, host);
+            Object.FindObjectOfType<ObjectManager>().DetectedObject((SemanticObjectArrayMsg)msg, host);
         }
     }
 }

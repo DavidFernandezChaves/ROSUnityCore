@@ -3,14 +3,14 @@ using ROSUnityCore.ROSBridgeLib.std_msgs;
 
 namespace ROSUnityCore {
     namespace ROSBridgeLib {
-        namespace semantic_mapping {
+        namespace ViMantic_msgs {
 
-            public class SemanticObjectsMsg : ROSBridgeMsg {
+            public class SemanticObjectArrayMsg : ROSBridgeMsg {
                 private HeaderMsg _header;
                 private SemanticObjectMsg[] _semanticObjects;
 
 
-                public SemanticObjectsMsg(JSONNode msg) {
+                public SemanticObjectArrayMsg(JSONNode msg) {
                     _header = new HeaderMsg(msg["header"]);
                     _semanticObjects = new SemanticObjectMsg[msg["semanticObjects"].Count];
                     for (int i = 0; i < _semanticObjects.Length; i++) {
@@ -18,7 +18,7 @@ namespace ROSUnityCore {
                     }
                 }
 
-                public SemanticObjectsMsg(HeaderMsg header, SemanticObjectMsg[] semanticObjects) {
+                public SemanticObjectArrayMsg(HeaderMsg header, SemanticObjectMsg[] semanticObjects) {
                     _header = header;
                     _semanticObjects = semanticObjects;
                 }
