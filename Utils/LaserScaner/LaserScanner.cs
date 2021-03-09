@@ -38,7 +38,7 @@ public class LaserScanner : MonoBehaviour {
             ros = transform.root.GetComponentInChildren<ROS>();
         }
         if (ros != null) {
-            ros.RegisterPublishPackage("CameraRGB_pub");
+            ros.RegisterPubPackage("CameraRGB_pub");
             StartCoroutine("PublishMeasure");
         }
         

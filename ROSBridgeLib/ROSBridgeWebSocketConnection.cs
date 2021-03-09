@@ -136,19 +136,22 @@ namespace ROSUnityCore {
 			/**
 			 * Add a subscriber callback to this connection. There can be many subscribers.
 			 */
-			public void AddSubscriber(Type subscriber) {
-				IsValidSubscriber(subscriber);
-				_subscribers.Add(subscriber);
-			}
+			public void AddSubscriber(Type subscriber, int throttle_rate = 0) {
+				IsValidSubscriber(subscriber);				
 
-			public void AddSubscriberOnline(Type subscriber) {
-				AddSubscriber(subscriber);
-				_ws.Send(ROSBridgeMsg.Subscribe(GetMessageTopic(subscriber), GetMessageType(subscriber)));
-			}
-
-			public void AddSubscriberOnline(Type subscriber, int throttle_rate) {
-				AddSubscriber(subscriber);
-				_ws.Send(ROSBridgeMsg.Subscribe(GetMessageTopic(subscriber), GetMessageType(subscriber), throttle_rate));
+				if (throttle_rate == 0) {
+					_subscribers.Add(subscriber);
+					if (_connected) {
+						_ws.Send(ROSBridgeMsg.Subscribe(GetMessageTopic(subscriber), GetMessageType(subscriber)));
+					}
+				} else {
+					if (_connected) {
+						_subscribers.Add(subscriber);
+						_ws.Send(ROSBridgeMsg.Subscribe(GetMessageTopic(subscriber), GetMessageType(subscriber), throttle_rate));
+					} else {
+						Debug.LogWarning("Throttle_rate requires to be connected.");
+					}
+				}
 			}
 
 			/**
@@ -164,11 +167,9 @@ namespace ROSUnityCore {
 			public void AddPublisher(Type publisher) {
 				IsValidPublisher(publisher);
 				_publishers.Add(publisher);
-			}
-
-			public void AddPublisherOnline(Type publisher) {
-				AddPublisher(publisher);
-				_ws.Send(ROSBridgeMsg.Advertise(GetMessageTopic(publisher), GetMessageType(publisher)));
+				if (_connected) {
+					_ws.Send(ROSBridgeMsg.Advertise(GetMessageTopic(publisher), GetMessageType(publisher)));
+				}				
 			}
 
 			/**

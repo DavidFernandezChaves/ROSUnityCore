@@ -19,7 +19,6 @@ namespace ROSUnityCore {
 
         private List<Transform> tfNodes;
         private char[] specialChar = { '/', ' ' };
-        private bool checkClients = true;
 
         #region Unity Functions
         private void Awake() {
@@ -31,7 +30,7 @@ namespace ROSUnityCore {
             }
 
             tfNodes = new List<Transform>();
-            clients = new List<ROS>();
+            CheckClients();
 
             StartCoroutine("SendTfs");
         }
@@ -119,45 +118,37 @@ namespace ROSUnityCore {
         }
 
         public void CheckClients() {
-            checkClients = true;
+            clients = new List<ROS>(FindObjectsOfType<ROS>());
+
+            foreach (ROS ros in clients) {
+                ros.RegisterSubPackage("Tf_sub");
+                ros.RegisterPubPackage("Tf_pub");
+            }
         }
         #endregion
 
 
         #region Private Functions
+
+
+
         IEnumerator SendTfs() {
             while (Application.isPlaying) {
-
-                if (checkClients) {
-                    clients = new List<ROS>(FindObjectsOfType<ROS>());
-
-                    foreach (ROS r in clients) {
-                        r.RegisterPublishPackage("Tf_pub");
-                    }
-
-                    checkClients = false;
-                }
-
                 foreach (ROS ros in clients) {
-                    if (ros.IsConnected()) {
-                        List<TransformStampedMsg> _transforms = new List<TransformStampedMsg>();
-                        foreach (Transform tf in tfNodes) {
-                            if (tf != null) {
-                                _transforms.Add(new TransformStampedMsg(new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0),
-                                                                        tf.parent.name),
-                                                                        tf.name, new TransformMsg(tf)));
-                            } else {
-                                tfNodes.Remove(tf);
-                            }
-
+                    List<TransformStampedMsg> _transforms = new List<TransformStampedMsg>();
+                    foreach (Transform tf in tfNodes) {
+                        if (tf != null) {
+                            _transforms.Add(new TransformStampedMsg(new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0),
+                                                                    tf.parent.name),
+                                                                    tf.name, new TransformMsg(tf)));
+                        } else {
+                            tfNodes.Remove(tf);
                         }
 
-                        TFMsg msg = new TFMsg(_transforms.ToArray());
-                        ros.Publish(Tf_pub.GetMessageTopic(), msg);
-                    } else {
-                        checkClients = true;
                     }
-                    
+
+                    TFMsg msg = new TFMsg(_transforms.ToArray());
+                    ros.Publish(Tf_pub.GetMessageTopic(), msg);
                 }
                 Log("Tfs updated.");
                 yield return new WaitForSeconds(updateRate);
