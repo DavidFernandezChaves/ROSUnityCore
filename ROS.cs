@@ -11,7 +11,6 @@ namespace ROSUnityCore {
         public static string pathClass = "ROSUnityCore.";
 
         public int verbose;
-        public List<string> subPackages;
         private ROSBridgeWebSocketConnection ros;
 
         #region Unity Functions
@@ -96,11 +95,6 @@ namespace ROSUnityCore {
             Log("Connected");            
             gameObject.SendMessage("Connected", SendMessageOptions.DontRequireReceiver);
             TFController.instance.CheckClients();
-            if (subPackages != null && subPackages.Count > 0) {
-                foreach(string package in subPackages) {
-                    RegisterSubPackage(package);
-                }                                
-            }
         }
 
         private void Log(string _msg) {

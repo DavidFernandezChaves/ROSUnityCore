@@ -2,14 +2,14 @@
 using ROSUnityCore.ROSBridgeLib.nav_msgs;
 
 namespace ROSUnityCore {
-    public class Path_pub : ROSBridgePublisher {
+    public class Map_pub : ROSBridgePublisher {
 
         public new static string GetMessageTopic() {
-            return "RobotAtVirtualHome/path";
+            return "/RobotAtVirtualHome/Map";
         }
 
         public new static string GetMessageType() {
-            return "nav_msgs/Path";
+            return "nav_msgs/OccupancyGrid";
         }
 
         public static string ToYAMLString(PathMsg msg) {

@@ -4,7 +4,7 @@ using ROSUnityCore.ROSBridgeLib.sensor_msgs;
 public class LaserScan_pub : ROSBridgePublisher {
     
     public new static string GetMessageTopic() {
-        return "/scan";
+        return "/RobotAtVirtualHome/scan";
     }
     
     public new static string GetMessageType() {
