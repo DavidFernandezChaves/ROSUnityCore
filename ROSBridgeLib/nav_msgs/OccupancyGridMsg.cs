@@ -65,7 +65,7 @@ namespace ROSUnityCore {
                 public override string ToYAMLString() {
                     string array = "[";
                     for (int i = 0; i < _data.Length; i++) {
-                        array = array + _data[i];
+                        array = array +  _data[i].ToString();
                         if ( i != _data.Length-1)
                             array += ",";
                     }
@@ -86,13 +86,12 @@ namespace ROSUnityCore {
 
                     string sMaxVal = NextNonCommentLine(br);
                     int maxVal = int.Parse(sMaxVal);
-
-                    Debug.Log(width * height);
+                    
                     // read width * height pixel values . . .
                     sbyte[] pixels = new sbyte[width * height];
-                    //for (int i = 0; i < (width * height); ++i) {
-                    //    pixels[i] = (sbyte)br.ReadByte();
-                    //}
+                    for (int i = 0; i < (width * height); ++i) {
+                        pixels[i] = (sbyte)br.ReadByte();
+                    }
 
                     br.Close(); s.Close();
                     return pixels;

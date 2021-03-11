@@ -25,7 +25,6 @@ namespace ROSUnityCore {
             if (ros != null)
                 ros.Render();
         }
-
         #endregion
 
         #region Public Functions
