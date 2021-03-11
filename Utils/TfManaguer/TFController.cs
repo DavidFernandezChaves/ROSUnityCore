@@ -30,15 +30,20 @@ namespace ROSUnityCore {
             }
 
             tfNodes = new List<Transform>();
-            CheckClients();
-
+            clients = new List<ROS>();
             StartCoroutine("SendTfs");
         }
-        #endregion
 
-        #region Public Functions
+        public void Connected(ROS ros) {
+            clients.Add(ros);
+            ros.RegisterSubPackage("Tf_sub");
+            ros.RegisterPubPackage("Tf_pub");
+        }
+            #endregion
 
-        public void NewTf(TFMsg _msg, string _ip) {
+            #region Public Functions
+
+            public void NewTf(TFMsg _msg, string _ip) {
             TransformStampedMsg[] msgs = _msg.Gettransforms();
             foreach (TransformStampedMsg tf in msgs) {
 
@@ -117,27 +122,24 @@ namespace ROSUnityCore {
             return true;
         }
 
-        public void CheckClients() {
-            clients = new List<ROS>(FindObjectsOfType<ROS>());
+        //public void CheckClients() {
+        //    clients = new List<ROS>(FindObjectsOfType<ROS>());
 
-            foreach (ROS ros in clients) {
-                ros.RegisterSubPackage("Tf_sub");
-                ros.RegisterPubPackage("Tf_pub");
-            }
-        }
+        //    foreach (ROS ros in clients) {
+        //        ros.RegisterSubPackage("Tf_sub");
+        //        ros.RegisterPubPackage("Tf_pub");
+        //    }
+        //}
         #endregion
 
 
         #region Private Functions
-
-
-
         IEnumerator SendTfs() {
             while (Application.isPlaying) {
                 foreach (ROS ros in clients) {
                     List<TransformStampedMsg> _transforms = new List<TransformStampedMsg>();
                     foreach (Transform tf in tfNodes) {
-                        if (tf != null) {
+                        if (tf != null) {                            
                             _transforms.Add(new TransformStampedMsg(new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0),
                                                                     tf.parent.name),
                                                                     tf.name, new TransformMsg(tf)));

@@ -3,6 +3,7 @@ using ROSUnityCore.ROSBridgeLib;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 namespace ROSUnityCore {
 
@@ -93,8 +94,8 @@ namespace ROSUnityCore {
                 }
             }
             Log("Connected");            
-            gameObject.SendMessage("Connected", SendMessageOptions.DontRequireReceiver);
-            TFController.instance.CheckClients();
+            gameObject.SendMessageUpwards("Connected",this, SendMessageOptions.DontRequireReceiver);
+            GameObject.FindGameObjectsWithTag("GeneralScripts").ToList().ForEach(G => G.SendMessage("Connected", this, SendMessageOptions.DontRequireReceiver));
         }
 
         private void Log(string _msg) {

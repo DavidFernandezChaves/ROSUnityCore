@@ -30,9 +30,7 @@ namespace ROSUnityCore {
 
                 public OccupancyGridMsg(HeaderMsg header, TextAsset pgmFile,float resolution, Vector3 origin) {
                     _header = header;
-                    uint width = 0;
-                    uint height = 0;
-                    _data = LoadImage(pgmFile, out width, out height);
+                    _data = LoadImage(pgmFile, out uint width, out uint height);
                     _info = new MapMetaDataMsg(new TimeMsg (0,0), resolution, width, height, new PoseMsg(origin, Quaternion.identity, false));
                     
                 }
@@ -89,6 +87,7 @@ namespace ROSUnityCore {
                     string sMaxVal = NextNonCommentLine(br);
                     int maxVal = int.Parse(sMaxVal);
 
+                    Debug.Log(width * height);
                     // read width * height pixel values . . .
                     sbyte[] pixels = new sbyte[width * height];
                     //for (int i = 0; i < (width * height); ++i) {
