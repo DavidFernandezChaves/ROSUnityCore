@@ -200,7 +200,7 @@ namespace ROSUnityCore {
 			}
 
 			private void Run() {
-				_ws = new WebSocket(_host + ":" + _port);
+				_ws = new WebSocket(_host + ":" + _port);				
 				_ws.OnMessage += (sender, e) => this.OnMessage(e.Data);
 				//_ws.CloseAsync();
 				_ws.Connect();

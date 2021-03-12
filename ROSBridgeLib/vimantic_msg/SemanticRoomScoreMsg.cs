@@ -40,7 +40,7 @@ namespace ROSUnityCore {
                 }
 
                 public override string ToYAMLString() {
-                    return "{\"type\" : \"" + _type + "\", \"score\" : " + _score.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + "}";
+                    return "{\"type\" : \"" + _type + "\", \"score\" : " + _score.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + "}";
                 }
             }
         }

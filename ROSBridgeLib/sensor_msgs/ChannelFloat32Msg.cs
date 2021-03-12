@@ -36,7 +36,7 @@ namespace ROSUnityCore {
                 public override string ToString() {
                     string resultado = "ChannelFloat32 [name=" + _name + ",  values=[";
                     for (int i = 0; i < _values.Length; i++) {
-                        resultado += _values[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+                        resultado += _values[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
                         if (i < (_values.Length - 1))
                             resultado += ",";
                     }
@@ -48,7 +48,7 @@ namespace ROSUnityCore {
                 public override string ToYAMLString() {
                     string resultado = "{\"name\" : " + _name + ",  \"values\" : [";
                     for (int i = 0; i < _values.Length; i++) {
-                        resultado += _values[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+                        resultado += _values[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
                         if (i < (_values.Length - 1))
                             resultado += ",";
                     }

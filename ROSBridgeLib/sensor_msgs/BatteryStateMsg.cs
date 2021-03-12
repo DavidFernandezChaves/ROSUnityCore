@@ -74,15 +74,15 @@ namespace ROSUnityCore {
 
                 public override string ToString() {
                     string resultado = "BatteryState [header=" + _header.ToString()
-                                    + ",  capacity=" + _capacity.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                                    + ",  charge=" + _charge.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                                    + ",  current=" + _current.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                                    + ",  design_capacity=" + _design_capacity.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                                    + ",  percentage=" + _percentage.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                                    + ",  voltage=" + _voltage.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
+                                    + ",  capacity=" + _capacity.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                                    + ",  charge=" + _charge.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                                    + ",  current=" + _current.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                                    + ",  design_capacity=" + _design_capacity.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                                    + ",  percentage=" + _percentage.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                                    + ",  voltage=" + _voltage.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
                                     + ",  cell_voltage=[";
                     for (int i = 0; i < _cell_voltage.Length; i++) {
-                        resultado += _cell_voltage[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+                        resultado += _cell_voltage[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
                         if (i < (_cell_voltage.Length - 1))
                             resultado += ",";
                     }
@@ -100,15 +100,15 @@ namespace ROSUnityCore {
 
                 public override string ToYAMLString() {
                     string resultado = "{\"header\" : " + _header.ToYAMLString()
-                    + ", \"capacity\" : " + _capacity.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                    + ", \"charge\" : " + _charge.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                    + ", \"current\" : " + _current.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                    + ", \"design_capacity\" : " + _design_capacity.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                    + ", \"percentage\" : " + _percentage.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-                    + ", \"voltage\" : " + _voltage.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
+                    + ", \"capacity\" : " + _capacity.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                    + ", \"charge\" : " + _charge.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                    + ", \"current\" : " + _current.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                    + ", \"design_capacity\" : " + _design_capacity.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                    + ", \"percentage\" : " + _percentage.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+                    + ", \"voltage\" : " + _voltage.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
                     + ", \"cell_voltage\" : [";
                     for (int i = 0; i < _cell_voltage.Length; i++) {
-                        resultado += _cell_voltage[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+                        resultado += _cell_voltage[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
                         if (i < (_cell_voltage.Length - 1))
                             resultado += ",";
                     }

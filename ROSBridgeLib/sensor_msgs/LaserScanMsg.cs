@@ -53,22 +53,22 @@ namespace ROSUnityCore {
 
 				public override string ToString() {
 					string resultado = "LaserScan [header=" + _header.ToString()
-									+ ",  angle_min=" + _angle_min.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ",  angle_max=" + _angle_max.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ",  angle_increment=" + _angle_increment.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ",  time_increment=" + _time_increment.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ",  scan_time=" + _scan_time.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ",  range_min=" + _range_min.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ",  range_max=" + _range_max.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
+									+ ",  angle_min=" + _angle_min.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ",  angle_max=" + _angle_max.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ",  angle_increment=" + _angle_increment.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ",  time_increment=" + _time_increment.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ",  scan_time=" + _scan_time.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ",  range_min=" + _range_min.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ",  range_max=" + _range_max.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
 									   + ",  ranges=[";
 					for (int i = 0; i < _ranges.Length; i++) {
-						resultado += _ranges[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+						resultado += _ranges[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
 						if (i < (_ranges.Length - 1))
 							resultado += ",";
 					}
 					resultado += "],intensities=[";
 					for (int i = 0; i < _intensities.Length; i++) {
-						resultado += _ranges[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+						resultado += _ranges[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
 						if (i < (_intensities.Length - 1))
 							resultado += ",";
 					}
@@ -79,23 +79,23 @@ namespace ROSUnityCore {
 
 				public override string ToYAMLString() {
 					string resultado = "{\"header\" : " + _header.ToYAMLString()
-									+ ", \"angle_min\" : " + _angle_min.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ", \"angle_max\" : " + _angle_max.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ", \"angle_increment\" : " + _angle_increment.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ", \"time_increment\" : " + _time_increment.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ", \"scan_time\" : " + _scan_time.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ", \"range_min\" : " + _range_min.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
-									+ ", \"range_max\" : " + _range_max.ToString("N", System.Globalization.CultureInfo.InvariantCulture)
+									+ ", \"angle_min\" : " + _angle_min.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ", \"angle_max\" : " + _angle_max.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ", \"angle_increment\" : " + _angle_increment.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ", \"time_increment\" : " + _time_increment.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ", \"scan_time\" : " + _scan_time.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ", \"range_min\" : " + _range_min.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
+									+ ", \"range_max\" : " + _range_max.ToString("G", System.Globalization.CultureInfo.InvariantCulture)
 									   + ", \"ranges\" : [";
 
 					for (int i = 0; i < _ranges.Length; i++) {
-						resultado += _ranges[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+						resultado += _ranges[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
 						if (i < (_ranges.Length - 1))
 							resultado += ",";
 					}
 					resultado += "], \"intensities\" : [";
 					for (int i = 0; i < _intensities.Length; i++) {
-						resultado += _intensities[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+						resultado += _intensities[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
 						if (i < (_intensities.Length - 1))
 							resultado += ",";
 					}

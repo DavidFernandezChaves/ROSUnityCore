@@ -32,11 +32,11 @@ namespace ROSUnityCore {
                 }
 
                 public override string ToString() {
-                    return "Object [id=" + _id + ", score=" + _score.ToString().Replace(",", ".") + ", pose=" + _pose.ToString() + "]";
+                    return "Object [id=" + _id + ", score=" + _score.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ", pose=" + _pose.ToString() + "]";
                 }
 
                 public override string ToYAMLString() {
-                    return "{\"id\" : \"" + _id + "\", \"score\" : " + _score.ToString().Replace(",", ".") + ", \"pose\" : " + _pose.ToYAMLString() + "}";
+                    return "{\"id\" : \"" + _id + "\", \"score\" : " + _score.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ", \"pose\" : " + _pose.ToYAMLString() + "}";
                 }
             }
         }

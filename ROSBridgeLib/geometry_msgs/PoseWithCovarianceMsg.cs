@@ -41,7 +41,7 @@ namespace ROSUnityCore {
 				public override string ToString() {
 					string array = "[";
 					for (int i = 0; i < _covariance.Length; i++) {
-						array = array + _covariance[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+						array = array + _covariance[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
 						if (i < _covariance.Length - 1)
 							array += ",";
 					}
@@ -52,7 +52,7 @@ namespace ROSUnityCore {
 				public override string ToYAMLString() {
 					string array = "[";
 					for (int i = 0; i < _covariance.Length; i++) {
-						array = array + _covariance[i].ToString("N", System.Globalization.CultureInfo.InvariantCulture);
+						array = array + _covariance[i].ToString("G", System.Globalization.CultureInfo.InvariantCulture);
 						if (i < _covariance.Length - 1)
 							array += ",";
 					}

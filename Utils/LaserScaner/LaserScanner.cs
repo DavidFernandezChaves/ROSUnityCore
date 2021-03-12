@@ -11,77 +11,60 @@ using UnityEngine;
 public class LaserScanner : MonoBehaviour {
 
     public int verbose;    
-    public int samples = 314;
-    public float updateRate = 1f;
+    public float ROSFrecuency = 1f;
+
     public double angle_min = 0;
-    public double angle_max = 6.28f;
-    public double angle_increment = 0.02f;
-    public double time_increment = 0;
-    public double scan_time = 0;
+    public double angle_max = 360f;
+    public double angle_increment = 0.5f;
+
     public double range_min = 0.12f;
     public double range_max = 12.0f;
-    public double[] ranges;
-    public double[] intensities;
 
-    private ROS ros;
-    private Ray[] rays;
-    private RaycastHit[] raycastHits;
-    
-    
-    
-    public void Start() {
-        ranges = new double[samples];
-        rays = new Ray[samples];
-        raycastHits = new RaycastHit[samples];
+    public double[] ranges { get; private set; }
 
-        if (ros == null) {
-            ros = transform.root.GetComponentInChildren<ROS>();
-        }
-        if (ros != null) {
-            ros.RegisterPubPackage("CameraRGB_pub");
-            StartCoroutine("PublishMeasure");
-        }
-        
+    private int layerMask;
+
+    #region Unity Functions
+    private void Start() {
+        // This would cast rays only against colliders in layer N.
+        // But instead we want to collide against everything except layer N. The ~ operator does this, it inverts a bitmask.
+        layerMask = ~((1 << 1) | 1 << 2 | 1 << 10);
     }
+    #endregion
 
+    #region Public Functions
+    public void Connected(ROS ros) {
+        ros.RegisterPubPackage("LaserScan_pub");
+        StartCoroutine(SendLaser(ros));
+    }
+    #endregion
 
     #region Private Functions
-    public IEnumerator PublishMeasure() {
-        while (Application.isPlaying) {
-            if (ros.IsConnected()) {
-                MeasureDistance();
-                HeaderMsg _head = new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0), transform.name);
-                LaserScanMsg scan = new LaserScanMsg(_head, angle_min, angle_max, angle_increment, time_increment, scan_time, range_min, range_max, ranges, intensities);
-                ros.Publish(LaserScan_pub.GetMessageTopic(), scan);
-
-            }
-            yield return new WaitForSeconds(updateRate);
+    public IEnumerator SendLaser(ROS ros) {
+        Log("Sending laser to ros.");
+        while (ros.IsConnected()) {
+            yield return new WaitForEndOfFrame();
+            Scan();
+            HeaderMsg _head = new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0), transform.name);
+            LaserScanMsg scan = new LaserScanMsg(_head, angle_min*Mathf.Deg2Rad, angle_max * Mathf.Deg2Rad, angle_increment * Mathf.Deg2Rad, 0, 0, range_min, range_max, ranges, new double[0]);
+            ros.Publish(LaserScan_pub.GetMessageTopic(), scan);
+            yield return new WaitForSeconds(ROSFrecuency);
         }
     }
 
-    private void MeasureDistance() {
-        rays = new Ray[samples];
-        raycastHits = new RaycastHit[samples];
+    private void Scan() {
+        int samples = (int) ((angle_max - angle_min) / angle_increment);
         ranges = new double[samples];
+        Ray ray;
+        for (double i = angle_min; i < angle_max; i += angle_increment) {
+            ray = new Ray(transform.position, Quaternion.Euler(0,90+ (float)-i, 0) * transform.forward);
+            if (Physics.Raycast(ray, out RaycastHit raycastHit, (float)range_max, layerMask)) {
 
-        for (int i = 0; i < samples; i++) {
-            rays[i] = new Ray(transform.position, GetRayRotation(i) * transform.forward);
-
-            raycastHits[i] = new RaycastHit();
-            if (Physics.Raycast(rays[i], out raycastHits[i], (float)range_max)) {
-                if (raycastHits[i].distance >= range_min && raycastHits[i].distance <= range_max) { ranges[i] = raycastHits[i].distance; }
-            } else {
-                ranges[i] = 0;
+                if (raycastHit.distance >= range_min && raycastHit.distance <= range_max) {
+                    ranges[(int)(i/angle_increment)] = raycastHit.distance;
+                }
             }
         }
-    }
-
-
-    private Quaternion GetRayRotation(int sample) {
-        double eulerAngleInRadians = angle_max - (angle_increment * sample);
-        double eulerAngleInDegrees = eulerAngleInRadians * 180 / Mathf.PI;
-
-        return Quaternion.Euler(new Vector3(0, (float)eulerAngleInDegrees+90, 0));
     }
 
     private void Log(string _msg) {

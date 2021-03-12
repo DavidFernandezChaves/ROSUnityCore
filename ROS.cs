@@ -13,6 +13,7 @@ namespace ROSUnityCore {
 
         public int verbose;
         private ROSBridgeWebSocketConnection ros;
+        private string ip;
 
         #region Unity Functions
         void OnApplicationQuit() {
@@ -35,11 +36,12 @@ namespace ROSUnityCore {
         }
 
         public void Connect(string ip = "ws://localhost", int port = 9090) {
-            gameObject.name = "ws://"+ip;
-            ros = new ROSBridgeWebSocketConnection("ws://"+ip, port);
+            this.ip = ip;
+            gameObject.name = "ws://" + ip;            
+            ros = new ROSBridgeWebSocketConnection("ws://" + ip, port);
             Log("Connecting...");
             ros.AddSubscriber(Type.GetType(pathClass + "Client_Count_sub"));
-            if (verbose > 1) {
+            if (verbose > 2) {
                 ros.SetDebug(true);
             }
 
@@ -79,10 +81,24 @@ namespace ROSUnityCore {
         public bool IsConnected() {
             return ros._connected;
         }
-         
+
+        public void PingFinished(Ping p) {
+            Log("pint: "+p.time.ToString()+"ms");
+        }
         #endregion
 
         #region Private Functions
+        IEnumerator StartPing() {
+            WaitForSeconds f = new WaitForSeconds(0.05f);
+            while (ros._connected) {
+                Ping p = new Ping(ip);
+                while (p.isDone == false) {
+                    yield return f;
+                }
+                PingFinished(p);
+            }     
+        }
+
         private IEnumerator InitialPackage() {
             int i = 0;
             while (!ros._connected) {
@@ -93,8 +109,12 @@ namespace ROSUnityCore {
                 }
             }
             Log("Connected");            
-            gameObject.SendMessageUpwards("Connected",this, SendMessageOptions.DontRequireReceiver);
-            GameObject.FindGameObjectsWithTag("GeneralScripts").ToList().ForEach(G => G.SendMessage("Connected", this, SendMessageOptions.DontRequireReceiver));
+            GameObject.FindGameObjectsWithTag("ROSListener").ToList().ForEach(G => G.SendMessage("Connected", this, SendMessageOptions.DontRequireReceiver));
+            gameObject.BroadcastMessage("Connected", this, SendMessageOptions.DontRequireReceiver);
+            
+            if (verbose > 1) {
+                StartCoroutine(StartPing());
+            }
         }
 
         private void Log(string _msg) {

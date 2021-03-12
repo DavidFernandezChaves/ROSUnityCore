@@ -60,11 +60,11 @@ namespace ROSUnityCore {
 				}
 
 				public override string ToString() {
-					return "Vector3 [x=" + _x.ToString().Replace(",", ".") + ",  y=" + _y.ToString().Replace(",", ".") + ",  z=" + _z.ToString().Replace(",", ".") + "]";
+					return "Vector3 [x=" + _x.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ",  y=" + _y.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ",  z=" + _z.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + "]";
 				}
 
 				public override string ToYAMLString() {
-					return "{\"x\" : " + _x.ToString().Replace(",",".") + ", \"y\" : " + _y.ToString().Replace(",", ".") + ", \"z\" : " + _z.ToString().Replace(",", ".") + "}";
+					return "{\"x\" : " + _x.ToString().Replace(",",".") + ", \"y\" : " + _y.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ", \"z\" : " + _z.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + "}";
 				}
 			
 			}

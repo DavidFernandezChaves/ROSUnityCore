@@ -50,11 +50,11 @@ namespace ROSUnityCore {
                 }
 
                 public override string ToString() {
-                    return "Point32 [x=" + _x.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + ",  y=" + _y.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + ",  z=" + _z.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + "]";
+                    return "Point32 [x=" + _x.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ",  y=" + _y.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ",  z=" + _z.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + "]";
                 }
 
                 public override string ToYAMLString() {
-                    return "{\"x\" : " + _x.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + ", \"y\" : " + _y.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + ", \"z\" : " + _z.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + "}";
+                    return "{\"x\" : " + _x.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ", \"y\" : " + _y.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ", \"z\" : " + _z.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + "}";
                 }
             }
         }

@@ -24,11 +24,11 @@ namespace ROSUnityCore {
 				}
 
 				public override string ToString() {
-					return "Float32 [data=" + _data.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + "]";
+					return "Float32 [data=" + _data.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + "]";
 				}
 
 				public override string ToYAMLString() {
-					return "{\"data\" : " + _data.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + "}";
+					return "{\"data\" : " + _data.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + "}";
 				}
 			}
 		}

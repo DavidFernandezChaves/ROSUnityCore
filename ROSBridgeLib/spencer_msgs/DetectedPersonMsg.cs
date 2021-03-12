@@ -47,11 +47,11 @@ namespace ROSUnityCore {
                 }
 
                 public override string ToString() {
-                    return "DetectedPerson [confidence=" + _confidence.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + ",  detection_id=" + _detection_id + ",  modality=" + _modality + ",  pose=" + _pose.ToString() + "]";
+                    return "DetectedPerson [confidence=" + _confidence.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ",  detection_id=" + _detection_id + ",  modality=" + _modality + ",  pose=" + _pose.ToString() + "]";
                 }
 
                 public override string ToYAMLString() {
-                    return "{\"confidence\" : " + _confidence.ToString("N", System.Globalization.CultureInfo.InvariantCulture) + ", \"detection_id\" : " + _detection_id + ", \"modality\" : " + _modality + ", \"pose\" : " + _pose.ToYAMLString() + "}";
+                    return "{\"confidence\" : " + _confidence.ToString("G", System.Globalization.CultureInfo.InvariantCulture) + ", \"detection_id\" : " + _detection_id + ", \"modality\" : " + _modality + ", \"pose\" : " + _pose.ToYAMLString() + "}";
                 }
 
             }
