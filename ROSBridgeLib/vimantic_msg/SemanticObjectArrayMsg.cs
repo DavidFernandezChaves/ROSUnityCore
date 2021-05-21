@@ -36,23 +36,23 @@ namespace ROSUnityCore {
                 }
 
                 public override string ToString() {
-                    string resultado = ", semanticObjects=[";
+                    string result = ", semanticObjects=[";
                     for (int i = 0; i < _semanticObjects.Length; i++) {
-                        resultado += _semanticObjects[i].ToString();
+                        result += _semanticObjects[i].ToString();
                         if (i < (_semanticObjects.Length - 1))
-                            resultado += ",";
+                            result += ",";
                     }
-                    return "Detection [header=" + _header.ToString() + resultado + "]]";
+                    return "Detection [header=" + _header.ToString() + result + "]]";
                 }
 
                 public override string ToYAMLString() {
-                    string resultado = ",  \"semanticObjects\" : [";
+                    string result = ",  \"semanticObjects\" : [";
                     for (int i = 0; i < _semanticObjects.Length; i++) {
-                        resultado += _semanticObjects[i].ToYAMLString();
+                        result += _semanticObjects[i].ToYAMLString();
                         if (i < (_semanticObjects.Length - 1))
-                            resultado += ",";
+                            result += ",";
                     }
-                    return "{\"header\" : " + _header.ToYAMLString() + resultado + "]}";
+                    return "{\"header\" : " + _header.ToYAMLString() + result + "]}";
                 }
             }
         }
