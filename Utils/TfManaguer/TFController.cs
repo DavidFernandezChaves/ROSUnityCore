@@ -142,7 +142,7 @@ namespace ROSUnityCore {
                         if (tf != null) {
                             string parent_name = "map";
                             if(tf.parent != null) {
-                                parent_name = tf.parent.name
+                                parent_name = tf.parent.name;
                             }
                             _transforms.Add(new TransformStampedMsg(new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0),
                                                                     parent_name),
