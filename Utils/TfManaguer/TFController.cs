@@ -139,9 +139,13 @@ namespace ROSUnityCore {
                 foreach (ROS ros in clients) {
                     List<TransformStampedMsg> _transforms = new List<TransformStampedMsg>();
                     foreach (Transform tf in tfNodes) {
-                        if (tf != null) {                            
+                        if (tf != null) {
+                            string parent_name = "map";
+                            if(tf.parent != null) {
+                                parent_name = tf.parent.name
+                            }
                             _transforms.Add(new TransformStampedMsg(new HeaderMsg(0, new TimeMsg(DateTime.Now.Second, 0),
-                                                                    tf.parent.name),
+                                                                    parent_name),
                                                                     tf.name, new TransformMsg(tf)));
                         } else {
                             tfNodes.Remove(tf);
