@@ -11,9 +11,10 @@ namespace ROSUnityCore {
 
         public static string pathClass = "ROSUnityCore.";
 
+        public string robotName = "VirtualRobot";
         public int verbose;
         private ROSBridgeWebSocketConnection ros;
-        private string ip;
+        public string ip { get; private set; }
 
         #region Unity Functions
         void OnApplicationQuit() {
@@ -35,9 +36,9 @@ namespace ROSUnityCore {
             }
         }
 
-        public void Connect(string ip = "ws://localhost", int port = 9090) {
-            this.ip = ip;
-            gameObject.name = "ws://" + ip;            
+        public void Connect(string ip, int port = 9090) {
+            this.ip = ip;  
+            
             ros = new ROSBridgeWebSocketConnection("ws://" + ip, port);
             Log("Connecting...");
             ros.AddSubscriber(Type.GetType(pathClass + "Client_Count_sub"));
@@ -82,9 +83,6 @@ namespace ROSUnityCore {
             return ros._connected;
         }
 
-        public void PingFinished(Ping p) {
-            Log("pint: "+p.time.ToString()+"ms");
-        }
         #endregion
 
         #region Private Functions
@@ -95,7 +93,7 @@ namespace ROSUnityCore {
                 while (p.isDone == false) {
                     yield return f;
                 }
-                PingFinished(p);
+                Log("Ping: " + p.time.ToString() + "ms");
             }     
         }
 
@@ -108,23 +106,24 @@ namespace ROSUnityCore {
                     LogWarning("ROS does not respond.");
                 }
             }
-            Log("Connected");            
+            gameObject.name = robotName;
+            Debug.Log(ip+" - Connected");            
             GameObject.FindGameObjectsWithTag("ROSListener").ToList().ForEach(G => G.SendMessage("Connected", this, SendMessageOptions.DontRequireReceiver));
             gameObject.BroadcastMessage("Connected", this, SendMessageOptions.DontRequireReceiver);
             
-            if (verbose > 1) {
+            if (verbose > 0) {
                 StartCoroutine(StartPing());
             }
         }
 
         private void Log(string _msg) {
             if (verbose > 1)
-                Debug.Log("[ROS " + gameObject.name + "]: " + _msg);
+                Debug.Log("[ROS -" + ip + "]: " + _msg);
         }
 
         private void LogWarning(string _msg) {
             if (verbose > 0)
-                Debug.LogWarning("[ROS " + gameObject.name + "]: " + _msg);
+                Debug.LogWarning("[ROS -" + ip + "]: " + _msg);
         }
         #endregion
     }

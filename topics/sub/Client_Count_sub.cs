@@ -20,8 +20,13 @@ namespace ROSUnityCore {
         }
 
         public new static void CallBack(ROSBridgeMsg msg, string ip) {
-            GameObject.Find(ip).GetComponent<ROS>().UnSubcribe(typeof(Client_Count_sub));
-            Debug.Log(ip + " connected.");
+            var robots = Object.FindObjectsOfType<ROS>();
+            foreach(ROS r in robots) {
+                if(r.ip == ip) {
+                    r.UnSubcribe(typeof(Client_Count_sub));
+                    return;
+                }
+            }
         }
     }
 }

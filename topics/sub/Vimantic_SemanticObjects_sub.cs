@@ -4,6 +4,7 @@ using SimpleJSON;
 using ROSUnityCore.ROSBridgeLib.ViMantic_msgs;
 
 namespace ROSUnityCore {
+
     public class Vimantic_SemanticObjects_sub : ROSBridgeSubscriber {
 
         public new static string GetMessageTopic() {
@@ -18,8 +19,8 @@ namespace ROSUnityCore {
             return new SemanticObjectArrayMsg(msg);
         }
 
-        public new static void CallBack(ROSBridgeMsg msg, string host) {
-            Object.FindObjectOfType<ObjectManager>().DetectedObject((SemanticObjectArrayMsg)msg, host);
+        public new static void CallBack(ROSBridgeMsg msg, string ip) {
+            Object.FindObjectOfType<ObjectManager>().DetectedObject((SemanticObjectArrayMsg)msg, ip);
         }
     }
 }
