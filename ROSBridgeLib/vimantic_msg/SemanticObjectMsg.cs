@@ -1,5 +1,6 @@
 ﻿using System;
 using SimpleJSON;
+using UnityEngine;
 using System.Collections.Generic;
 using ROSUnityCore.ROSBridgeLib.geometry_msgs;
 using ROSUnityCore.ROSBridgeLib.vision_msgs;
@@ -10,9 +11,9 @@ namespace ROSUnityCore {
 
             public class SemanticObjectMsg : ROSBridgeMsg {
 
-                public string _id { get; private set; }
-                public ObjectHypothesisMsg[] _scores { get; private set; }
-                public PoseWithCovarianceMsg _pose { get; private set; }
+                public string _id { get; private set; }                
+                public ObjectHypothesisMsg[] _scores { get; private set; }           
+                public PoseMsg _pose { get; private set; }
                 public string _roomId { get; private set; }
                 public int _detections { get; private set; }
                 public string _roomType { get; private set; }
@@ -25,14 +26,14 @@ namespace ROSUnityCore {
                     for (int i = 0; i < _scores.Length; i++) {
                         _scores[i] = new ObjectHypothesisMsg(msg["scores"][i]);
                     }
-                    _pose = new PoseWithCovarianceMsg(msg["pose"]);
+                    _pose = new PoseMsg(msg["pose"]);                    
                     _detections = int.Parse(msg["detections"]);
                     _roomId = msg["roomId"];
                     _roomType = msg["roomType"];
                     _size = new Vector3Msg(msg["size"]);
                 }
 
-                public SemanticObjectMsg(string id, ObjectHypothesisMsg[] scores, PoseWithCovarianceMsg pose, int ndetections, String roomId, String roomType, Vector3Msg size) {
+                public SemanticObjectMsg(string id, ObjectHypothesisMsg[] scores, PoseMsg pose, int ndetections, String roomId, String roomType, Vector3Msg size) {
                     _id = id;
                     _scores = scores;
                     _pose = pose;
@@ -50,7 +51,7 @@ namespace ROSUnityCore {
                         _scores[i] = new ObjectHypothesisMsg(score.Key, score.Value);
                         i++;
                     }
-                    _pose = new PoseWithCovarianceMsg(new PoseMsg(obj.pose, obj.rotation), new double[0]);
+                    _pose = new PoseMsg(obj.pose, obj.rotation);
                     _detections = obj.nDetections;
                     _roomId = obj.GetIdRoom();
                     _roomType = obj.room.roomType;

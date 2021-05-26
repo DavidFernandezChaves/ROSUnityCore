@@ -24,7 +24,7 @@ namespace ROSUnityCore {
                 }
 
                 public static string GetMessageType() {
-                    return "semantic_mapping/SemanticObjects";
+                    return "vimantic/SemanticObjectArray";
                 }
 
                 public HeaderMsg GetHeader() {
