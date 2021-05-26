@@ -4,7 +4,7 @@ using System;
 
 namespace ROSUnityCore {
     namespace ROSBridgeLib {
-        namespace vision_msgs {
+        namespace ViMantic_msgs {
 
             public class ObjectHypothesisMsg : ROSBridgeMsg {
 
@@ -23,7 +23,7 @@ namespace ROSUnityCore {
                 }
 
                 public static string GetMessageType() {
-                    return "vision_msgs/ObjectHypothesisWithPose";
+                    return "vimantic/ObjectHypothesisWithPose";
                 }
 
                 public override string ToString() {

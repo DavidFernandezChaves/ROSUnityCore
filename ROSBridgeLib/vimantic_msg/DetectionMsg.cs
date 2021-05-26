@@ -3,7 +3,6 @@ using SimpleJSON;
 using UnityEngine;
 using System.Collections.Generic;
 using ROSUnityCore.ROSBridgeLib.geometry_msgs;
-using ROSUnityCore.ROSBridgeLib.vision_msgs;
 
 namespace ROSUnityCore {
     namespace ROSBridgeLib {
