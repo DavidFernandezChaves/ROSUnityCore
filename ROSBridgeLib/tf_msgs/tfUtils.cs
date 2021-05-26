@@ -41,11 +41,11 @@ namespace ROSUnityCore {
             }
 
             public static Quaternion TransormQuaternionROS2Unity(Quaternion q) {
-                return new Quaternion(q.x, -q.z, -q.y, q.w);
+                return new Quaternion(-q.x, -q.z, -q.y, q.w);
             }
 
             public static Quaternion TransormQuaternionUnity2ROS(Quaternion q) {
-                return new Quaternion(q.x,-q.z,-q.y,q.w);
+                return new Quaternion(-q.x,-q.z,-q.y,q.w);
             }
 
             static public Vector3 GetEulerYPR(Quaternion q, int solution) {

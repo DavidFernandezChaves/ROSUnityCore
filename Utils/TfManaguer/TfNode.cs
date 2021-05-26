@@ -4,7 +4,7 @@ namespace ROSUnityCore {
     public class TfNode : MonoBehaviour {
 
         private void Start() {
-            TFController.instance.RegisterNode(transform);        
+            TFSystem.instance.RegisterNode(transform);        
         }
     }
 }

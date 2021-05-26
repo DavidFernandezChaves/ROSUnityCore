@@ -21,10 +21,10 @@ namespace ROSUnityCore {
                 }               
 
                 public QuaternionMsg(Quaternion q,bool fromUnity = false){
-
                     if (fromUnity) {
                         q = TfUtils.TransormQuaternionUnity2ROS(q);
                     }
+
                     _x = q.x;
                     _y = q.y;
                     _z = q.z;

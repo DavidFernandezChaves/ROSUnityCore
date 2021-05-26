@@ -20,7 +20,7 @@ namespace ROSUnityCore {
         }
 
         public new static void CallBack(ROSBridgeMsg msg, string ip) {
-            Object.FindObjectOfType<TFController>().NewTf((TFMsg)msg, ip);
+            Object.FindObjectOfType<TFSystem>().NewTf((TFMsg)msg, ip);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace ROSUnityCore {
         }
 
         public new static void CallBack(ROSBridgeMsg msg, string ip) {
-            Object.FindObjectOfType<ObjectManager>().DetectedObject((DetectionArrayMsg)msg, ip);
+            Object.FindObjectOfType<ObjectManagerSystem>().DetectedObject((DetectionArrayMsg)msg, ip);
         }
     }
 }

@@ -8,10 +8,10 @@ using System;
 
 namespace ROSUnityCore {
 
-    public class TFController : MonoBehaviour {
+    public class TFSystem : MonoBehaviour {
 
         
-        public static TFController instance;
+        public static TFSystem instance;
         public int verbose;
         public List<ROS> clients { get; private set; }
         
