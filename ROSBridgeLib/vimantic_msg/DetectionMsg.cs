@@ -11,7 +11,7 @@ namespace ROSUnityCore {
             public class DetectionMsg : ROSBridgeMsg {
 
                 public ObjectHypothesisMsg[] _scores { get; private set; }
-                public PoseMsg _origin { get; private set; }
+                
                 public PoseMsg _pose { get; private set; }
                 public Vector3Msg _size { get; private set; }
 
@@ -21,14 +21,13 @@ namespace ROSUnityCore {
                     for (int i = 0; i < _scores.Length; i++) {
                         _scores[i] = new ObjectHypothesisMsg(msg["scores"][i]);
                     }
-                    _origin = new PoseMsg(msg["origin"]);
+                    
                     _pose = new PoseMsg(msg["pose"]);
                     _size = new Vector3Msg(msg["size"]);
                 }
 
-                public DetectionMsg(ObjectHypothesisMsg[] scores, PoseMsg origin, PoseMsg pose, Vector3Msg size) {
-                    _scores = scores;
-                    _origin = origin;
+                public DetectionMsg(ObjectHypothesisMsg[] scores, PoseMsg pose, Vector3Msg size) {
+                    _scores = scores;                    
                     _pose = pose;
                     _size = size;
                 }
@@ -55,7 +54,6 @@ namespace ROSUnityCore {
                     }
 
                     return "SemanticObject [scores=" + result
-                        + ", origin=" + _origin.ToString()
                         + ", pose=" + _pose.ToString()
                         + ", size=" + _size.ToString() + "]";
                 }
@@ -68,7 +66,6 @@ namespace ROSUnityCore {
                             result += ",";
                     }
                     return "{\"scores\" : " + result
-                        + ", \"origin\" : " + _pose.ToYAMLString()
                         + ", \"pose\" : " + _pose.ToYAMLString()
                         + ", \"size\" : " + _size.ToYAMLString() + "}";
                 }

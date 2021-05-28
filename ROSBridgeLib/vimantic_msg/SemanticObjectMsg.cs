@@ -50,7 +50,7 @@ namespace ROSUnityCore {
                         _scores[i] = new ObjectHypothesisMsg(score.Key, score.Value);
                         i++;
                     }
-                    _pose = new PoseMsg(obj.pose, obj.rotation);
+                    _pose = new PoseMsg(obj.position, obj.rotation);
                     _detections = obj.nDetections;
                     _roomId = obj.GetIdRoom();
                     _roomType = obj.room.roomType;
