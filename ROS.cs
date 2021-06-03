@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using UnityEditor;
 
 namespace ROSUnityCore {
 
@@ -11,12 +12,19 @@ namespace ROSUnityCore {
 
         public static string pathClass = "ROSUnityCore.";
 
+        public bool autoConnect = false;
         public string robotName = "VirtualRobot";
         public int verbose;
         private ROSBridgeWebSocketConnection ros;
-        public string ip { get; private set; }
+        public string ip;
 
         #region Unity Functions
+        private void Start() {
+            if (autoConnect) {
+                Connect(ip);
+            }
+        }
+
         void OnApplicationQuit() {
             if (ros != null) {
                 ros.Disconnect();
@@ -26,6 +34,10 @@ namespace ROSUnityCore {
         void Update() {
             if (ros != null)
                 ros.Render();
+            if(autoConnect) {
+                Disconnect();
+                Connect(ip);
+            }
         }
         #endregion
 
@@ -33,12 +45,15 @@ namespace ROSUnityCore {
         public void Disconnect() {
             if (ros != null) {
                 ros.Disconnect();
+                GameObject.FindGameObjectsWithTag("ROSListener").ToList().ForEach(G => G.SendMessage("Disconnected", this, SendMessageOptions.DontRequireReceiver));
+                gameObject.BroadcastMessage("Disconnected", this, SendMessageOptions.DontRequireReceiver);
             }
         }
 
         public void Connect(string ip, int port = 9090) {
-            this.ip = ip;  
-            
+            this.ip = ip;
+            autoConnect = false;
+
             ros = new ROSBridgeWebSocketConnection("ws://" + ip, port);
             Log("Connecting...");
             ros.AddSubscriber(Type.GetType(pathClass + "Client_Count_sub"));

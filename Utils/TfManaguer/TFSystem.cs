@@ -39,11 +39,15 @@ namespace ROSUnityCore {
             ros.RegisterSubPackage("Tf_sub");
             ros.RegisterPubPackage("Tf_pub");
         }
-            #endregion
 
-            #region Public Functions
+        public void Disconnected(ROS ros) {
+            clients.Remove(ros);
+        }
+        #endregion
 
-            public void NewTf(TFMsg _msg, string _ip) {
+        #region Public Functions
+
+        public void NewTf(TFMsg _msg, string _ip) {
             TransformStampedMsg[] msgs = _msg.Gettransforms();
             foreach (TransformStampedMsg tf in msgs) {
 
