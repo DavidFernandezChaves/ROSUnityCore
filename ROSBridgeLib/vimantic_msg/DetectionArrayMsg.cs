@@ -7,24 +7,24 @@ namespace ROSUnityCore {
         namespace ViMantic_msgs {
 
             public class DetectionArrayMsg : ROSBridgeMsg {
-                public HeaderMsg _header { get; private set; }
-                public PoseMsg _origin { get; private set; }
-                public DetectionMsg[] _detections { get; private set; }
+                public HeaderMsg header { get; private set; }
+                public PoseMsg origin { get; private set; }
+                public DetectionMsg[] detections { get; private set; }
 
 
                 public DetectionArrayMsg(JSONNode msg) {
-                    _header = new HeaderMsg(msg["header"]);
-                    _origin = new PoseMsg(msg["origin"]);
-                    _detections = new DetectionMsg[msg["detections"].Count];
-                    for (int i = 0; i < _detections.Length; i++) {
-                        _detections[i] = new DetectionMsg(msg["detections"][i]);
+                    header = new HeaderMsg(msg["header"]);
+                    origin = new PoseMsg(msg["origin"]);
+                    detections = new DetectionMsg[msg["detections"].Count];
+                    for (int i = 0; i < detections.Length; i++) {
+                        detections[i] = new DetectionMsg(msg["detections"][i]);
                     }
                 }
 
                 public DetectionArrayMsg(HeaderMsg header, PoseMsg origin, DetectionMsg[] semanticObjects) {
-                    _header = header;
-                    _origin = origin;
-                    _detections = semanticObjects;
+                    this.header = header;
+                    this.origin = origin;
+                    detections = semanticObjects;
                 }
 
                 public static string GetMessageType() {
@@ -33,26 +33,28 @@ namespace ROSUnityCore {
 
                 public override string ToString() {
                     string result = ", detections=[";
-                    for (int i = 0; i < _detections.Length; i++) {
-                        result += _detections[i].ToString();
-                        if (i < (_detections.Length - 1))
+                    for (int i = 0; i < detections.Length; i++) {
+                        result += detections[i].ToString();
+                        if (i < (detections.Length - 1))
                             result += ",";
                     }
-                    return "Detection [header=" + _header.ToString()
-                        + ", origin=" + _origin.ToString()
+                    return "Detection [header=" + header.ToString()
+                        + ", origin=" + origin.ToString()
                         + result + "]]";
                 }
 
                 public override string ToYAMLString() {
                     string result = ",  \"detections\" : [";
-                    for (int i = 0; i < _detections.Length; i++) {
-                        result += _detections[i].ToYAMLString();
-                        if (i < (_detections.Length - 1))
+                    for (int i = 0; i < detections.Length; i++) {
+                        result += detections[i].ToYAMLString();
+                        if (i < (detections.Length - 1))
                             result += ",";
                     }
-                    return "{\"header\" : " + _header.ToYAMLString()
-                        + ", \"origin\" : " + _origin.ToYAMLString() 
-                        + result + "]}";
+                    result += "]";
+
+                    return "{\"header\" : " + header.ToYAMLString()
+                        + ", \"origin\" : " + origin.ToYAMLString() 
+                        + result + "}";
                 }
             }
         }

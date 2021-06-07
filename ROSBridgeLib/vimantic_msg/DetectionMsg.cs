@@ -9,35 +9,44 @@ namespace ROSUnityCore {
         namespace ViMantic_msgs {
 
             public class DetectionMsg : ROSBridgeMsg {
-
-                public ObjectHypothesisMsg[] _scores { get; private set; }
-                
-                public PoseMsg _pose { get; private set; }
-                public Vector3Msg _size { get; private set; }
+                public ObjectHypothesisMsg[] scores { get; private set; }                
+                public PointMsg[] corners { get; private set; }
+                public byte fixed_corners { get; private set; }
 
 
                 public DetectionMsg(JSONNode msg) {
-                    _scores = new ObjectHypothesisMsg[msg["scores"].Count];
-                    for (int i = 0; i < _scores.Length; i++) {
-                        _scores[i] = new ObjectHypothesisMsg(msg["scores"][i]);
+                    scores = new ObjectHypothesisMsg[msg["scores"].Count];
+                    for (int i = 0; i < scores.Length; i++) {
+                        scores[i] = new ObjectHypothesisMsg(msg["scores"][i]);
                     }
-                    
-                    _pose = new PoseMsg(msg["pose"]);
-                    _size = new Vector3Msg(msg["size"]);
+                    corners = new PointMsg[msg["corners"].Count];
+                    for (int i = 0; i < corners.Length; i++) {
+                        corners[i] = new PointMsg(msg["corners"][i]);
+                    }
+                    fixed_corners = byte.Parse(msg["data"], System.Globalization.CultureInfo.InvariantCulture);
                 }
 
-                public DetectionMsg(ObjectHypothesisMsg[] scores, PoseMsg pose, Vector3Msg size) {
-                    _scores = scores;                    
-                    _pose = pose;
-                    _size = size;
+                public DetectionMsg(ObjectHypothesisMsg[] scores, PointMsg[] corners, byte fixed_corners) {
+                    this.scores = scores;
+                    this.corners = corners;
+                    this.fixed_corners = fixed_corners;
                 }
 
                 public Dictionary<string, float> GetScores() {
                     Dictionary<string, float> result = new Dictionary<string, float>();
-                    foreach (ObjectHypothesisMsg score in _scores) {
+                    foreach (ObjectHypothesisMsg score in scores) {
                         if (!result.ContainsKey(score._id))
                             result.Add(score._id, score._score);
                     }
+                    return result;
+                }
+
+                public List<Vector3> GetCorners() {
+                    List<Vector3> result = new List<Vector3>();
+                    foreach(PointMsg pt in corners) {
+                        result.Add(pt.GetPoint());
+                    }
+
                     return result;
                 }
 
@@ -46,28 +55,46 @@ namespace ROSUnityCore {
                 }
 
                 public override string ToString() {
-                    string result = ", scores=[";
-                    for (int i = 0; i < _scores.Length; i++) {
-                        result += _scores[i].ToString();
-                        if (i < (_scores.Length - 1))
-                            result += ",";
+                    string result1 = "[";
+                    for (int i = 0; i < scores.Length; i++) {
+                        result1 += scores[i].ToString();
+                        if (i < (scores.Length - 1))
+                            result1 += ",";
                     }
+                    result1 += "]";
 
-                    return "SemanticObject [scores=" + result
-                        + ", pose=" + _pose.ToString()
-                        + ", size=" + _size.ToString() + "]";
+                    string result2 = "[";
+                    for (int i = 0; i < corners.Length; i++) {
+                        result2 += corners[i].ToString();
+                        if (i < (corners.Length - 1))
+                            result2 += ",";
+                    }
+                    result2 += "]";
+
+                    return "SemanticObject [scores=" + result1
+                        + ", corners=" + result2
+                        + ", fixed_corners="+ fixed_corners + "]";
                 }
 
                 public override string ToYAMLString() {
-                    string result = ",  \"scores\" : [";
-                    for (int i = 0; i < _scores.Length; i++) {
-                        result += _scores[i].ToYAMLString();
-                        if (i < (_scores.Length - 1))
-                            result += ",";
+                    string result1 = "[";
+                    for (int i = 0; i < scores.Length; i++) {
+                        result1 += scores[i].ToYAMLString();
+                        if (i < (scores.Length - 1))
+                            result1 += ",";
                     }
-                    return "{\"scores\" : " + result
-                        + ", \"pose\" : " + _pose.ToYAMLString()
-                        + ", \"size\" : " + _size.ToYAMLString() + "}";
+                    result1 += "]";
+                    string result2 = "[";
+                    for (int i = 0; i < corners.Length; i++) {
+                        result2 += corners[i].ToYAMLString();
+                        if (i < (corners.Length - 1))
+                            result2 += ",";
+                    }
+                    result2 += "]";
+
+                    return "{\"scores\" : " + result1
+                        + ", \"corners\" : " + result2
+                        + ", \"fixed_corners\" : " + fixed_corners + "}";
                 }
             }
         }
