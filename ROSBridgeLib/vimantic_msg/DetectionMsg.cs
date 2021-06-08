@@ -23,7 +23,7 @@ namespace ROSUnityCore {
                     for (int i = 0; i < corners.Length; i++) {
                         corners[i] = new PointMsg(msg["corners"][i]);
                     }
-                    fixed_corners = byte.Parse(msg["data"], System.Globalization.CultureInfo.InvariantCulture);
+                    fixed_corners = byte.Parse(msg["fixed_corners"], System.Globalization.CultureInfo.InvariantCulture);
                 }
 
                 public DetectionMsg(ObjectHypothesisMsg[] scores, PointMsg[] corners, byte fixed_corners) {
@@ -44,7 +44,7 @@ namespace ROSUnityCore {
                 public List<Vector3> GetCorners() {
                     List<Vector3> result = new List<Vector3>();
                     foreach(PointMsg pt in corners) {
-                        result.Add(pt.GetPoint());
+                        result.Add(pt.GetPointPositionUnity());
                     }
 
                     return result;
