@@ -11,7 +11,7 @@ namespace ROSUnityCore {
             public class DetectionMsg : ROSBridgeMsg {
                 public ObjectHypothesisMsg[] scores { get; private set; }                
                 public PointMsg[] corners { get; private set; }
-                public byte fixed_corners { get; private set; }
+                public byte occluded_corners { get; private set; }
 
 
                 public DetectionMsg(JSONNode msg) {
@@ -23,13 +23,13 @@ namespace ROSUnityCore {
                     for (int i = 0; i < corners.Length; i++) {
                         corners[i] = new PointMsg(msg["corners"][i]);
                     }
-                    fixed_corners = byte.Parse(msg["fixed_corners"], System.Globalization.CultureInfo.InvariantCulture);
+                    occluded_corners = byte.Parse(msg["occluded_corners"], System.Globalization.CultureInfo.InvariantCulture);
                 }
 
-                public DetectionMsg(ObjectHypothesisMsg[] scores, PointMsg[] corners, byte fixed_corners) {
+                public DetectionMsg(ObjectHypothesisMsg[] scores, PointMsg[] corners, byte occluded_corners) {
                     this.scores = scores;
                     this.corners = corners;
-                    this.fixed_corners = fixed_corners;
+                    this.occluded_corners = occluded_corners;
                 }
 
                 public Dictionary<string, float> GetScores() {
@@ -73,7 +73,7 @@ namespace ROSUnityCore {
 
                     return "SemanticObject [scores=" + result1
                         + ", corners=" + result2
-                        + ", fixed_corners="+ fixed_corners + "]";
+                        + ", occluded_corners="+ occluded_corners + "]";
                 }
 
                 public override string ToYAMLString() {
@@ -94,7 +94,7 @@ namespace ROSUnityCore {
 
                     return "{\"scores\" : " + result1
                         + ", \"corners\" : " + result2
-                        + ", \"fixed_corners\" : " + fixed_corners + "}";
+                        + ", \"occluded_corners\" : " + occluded_corners + "}";
                 }
             }
         }

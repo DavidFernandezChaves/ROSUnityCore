@@ -43,18 +43,18 @@ namespace ROSUnityCore {
                 }
 
                 public SemanticObjectMsg(SemanticObject obj) {
-                    _id = obj.id;
-                    _scores = new ObjectHypothesisMsg[obj.scores.Count];
+                    _id = obj.Id;
+                    _scores = new ObjectHypothesisMsg[obj.Scores.Count];
                     int i = 0;
-                    foreach(KeyValuePair<string,float> score in obj.scores) {
+                    foreach(KeyValuePair<string,float> score in obj.Scores) {
                         _scores[i] = new ObjectHypothesisMsg(score.Key, score.Value);
                         i++;
                     }
-                    _pose = new PoseMsg(obj.position, obj.rotation);
-                    _detections = obj.nDetections;
+                    _pose = new PoseMsg(obj.Position, obj.Rotation);
+                    _detections = obj.NDetections;
                     _roomId = obj.GetIdRoom();
-                    _roomType = obj.room.roomType;
-                    _size = new Vector3Msg(obj.size);
+                    _roomType = obj.Room.roomType;
+                    _size = new Vector3Msg(obj.Size);
                 }
 
                 public Dictionary<string,float> GetScores() {
