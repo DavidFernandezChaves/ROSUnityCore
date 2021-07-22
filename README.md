@@ -1,13 +1,11 @@
 # ROSUnity
-This is a library to connect [Unity3D](https://unity.com/) to [ROS](https://www.ros.org/) by websocket protocol.
+This is a library to connect [Unity3D](https://unity.com/) and [ROS](https://www.ros.org/) by websocket protocol.
 
 ## Requirements
-- ROS Kinetic Kame or higher
 - The ROS package: [RosBridge_suit](http://wiki.ros.org/rosbridge_suite).
-- Unity 5.0 or higher.
 
 ## Installation
-Import the package into your Unity project.
+Clone this repository in to the Assets folder of an Unity project:
 
 ## Method of use
 1. Instantiate a Gameobject with the "ROS" script attached.
@@ -25,4 +23,4 @@ This package adds some utilities to speed up development:
 - MapConstructor: This system stamps the occupation map used in ROS on a Unity terrain.
 - LaserScaner: Simulates in Unity a laser scanner.
 
-This work is an expanded and modified version of [ROSBridgeLib](https://github.com/MathiasCiarlo/ROSBridgeLib).
+This project comes from [ROSBridgeLib](https://github.com/MathiasCiarlo/ROSBridgeLib).
