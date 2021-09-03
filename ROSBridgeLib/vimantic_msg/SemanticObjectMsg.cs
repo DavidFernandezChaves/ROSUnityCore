@@ -88,14 +88,14 @@ namespace ROSUnityCore {
                 }
 
                 public override string ToYAMLString() {
-                    string result = ",  \"scores\" : [";
+                    string result = "[";
                     for (int i = 0; i < _scores.Length; i++) {
                         result += _scores[i].ToYAMLString();
                         if (i < (_scores.Length - 1))
                             result += ",";
                     }
                     return "{\"id\" : \"" + _id 
-                        + "\", \"scores\" : " + result
+                        + "\", \"scores\" : " + result + "]"
                         + ", \"pose\" : " + _pose.ToYAMLString()
                         + ", \"roomId\" : \"" + _roomId
                         + "\", \"detections\" : " + _detections
