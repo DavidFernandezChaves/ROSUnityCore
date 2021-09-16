@@ -31,7 +31,7 @@ namespace ROSUnityCore {
 
             tfNodes = new List<Transform>();
             clients = new List<ROS>();
-            StartCoroutine("SendTfs");
+            StartCoroutine(SendTfs());
         }
 
         public void Connected(ROS ros) {
@@ -121,7 +121,19 @@ namespace ROSUnityCore {
         }
 
         public bool RegisterNode(Transform tf) {
+
+            int n = 0;
+            string newName = tf.name + "_" + n;
+
+            while (tfNodes.Find(T => T.name.Equals(newName)) != null)
+            {
+                n++;
+                newName = tf.name + "_" + n;
+            }
+
+            tf.name = newName;
             tfNodes.Add(tf);
+                     
             Log(tf.name + "Registered.");
             return true;
         }
