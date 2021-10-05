@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using UnityEditor;
+using ROSUnityCore.Utils;
 
 namespace ROSUnityCore {
 
@@ -12,9 +12,13 @@ namespace ROSUnityCore {
 
         public static string pathClass = "ROSUnityCore.";
 
+        [Header("General")]
+        [Tooltip("The log level to use")]
+        public LogLevel LogLevel = LogLevel.Normal;
+
         public bool autoConnect = false;
         public string robotName = "VirtualRobot";
-        public int verbose;
+
         private ROSBridgeWebSocketConnection ros;
         public string ip;
 
@@ -55,16 +59,16 @@ namespace ROSUnityCore {
             autoConnect = false;
 
             ros = new ROSBridgeWebSocketConnection("ws://" + ip, port);
-            Log("Connecting...");
+            Log("Connecting...",LogLevel.Developer);
             ros.AddSubscriber(Type.GetType(pathClass + "Client_Count_sub"));
-            if (verbose > 2) {
+            if (LogLevel == LogLevel.Developer) {
                 ros.SetDebug(true);
             }
 
             try {
                 ros.Connect();
             } catch {
-                LogWarning("Fault when connecting to " + ip);
+                Log("Fault when connecting to " + ip,LogLevel.Error,true);
                 Destroy(this.gameObject);
             }
 
@@ -74,7 +78,7 @@ namespace ROSUnityCore {
         public void RegisterSubPackage(string _package, int Throttle_rate = 0) {
 
             if(Throttle_rate != 0 && !ros._connected) {
-                LogWarning("Throttle_rate requires to be connected.");
+                Log("Throttle_rate requires to be connected.",LogLevel.Error,true);
                 return;
             }
 
@@ -108,7 +112,7 @@ namespace ROSUnityCore {
                 while (p.isDone == false) {
                     yield return f;
                 }
-                Log("Ping: " + p.time.ToString() + "ms");
+                Log("Ping: " + p.time.ToString() + "ms",LogLevel.Developer);
             }     
         }
 
@@ -118,7 +122,7 @@ namespace ROSUnityCore {
                 yield return new WaitForSeconds(0.5f);
                 i++;
                 if ((i % 11) == 10) {
-                    LogWarning("ROS does not respond.");
+                    Log("ROS does not respond.",LogLevel.Error);
                 }
             }
             gameObject.name = robotName;
@@ -126,19 +130,24 @@ namespace ROSUnityCore {
             GameObject.FindGameObjectsWithTag("ROSListener").ToList().ForEach(G => G.SendMessage("Connected", this, SendMessageOptions.DontRequireReceiver));
             gameObject.BroadcastMessage("Connected", this, SendMessageOptions.DontRequireReceiver);
             
-            if (verbose > 0) {
+            if (LogLevel == LogLevel.Developer) {
                 StartCoroutine(StartPing());
             }
         }
 
-        private void Log(string _msg) {
-            if (verbose > 1)
-                Debug.Log("[ROS -" + ip + "]: " + _msg);
-        }
-
-        private void LogWarning(string _msg) {
-            if (verbose > 0)
-                Debug.LogWarning("[ROS -" + ip + "]: " + _msg);
+        private void Log(string _msg, LogLevel lvl, bool Warning = false)
+        {
+            if (LogLevel <= lvl)
+            {
+                if (Warning)
+                {
+                    Debug.LogWarning("[ROS -" + ip + "]: " + _msg);
+                }
+                else
+                {
+                    Debug.Log("[ROS -" + ip + "]: " + _msg);
+                }
+            }
         }
         #endregion
     }

@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public static class TransformExtensions
+namespace ROSUnityCore.Utils
 {
-    public static void FromMatrix(this Transform transform, Matrix4x4 matrix)
+    public static class TransformExtensions
     {
-        transform.localScale = matrix.ExtractScale();
-        transform.localRotation = matrix.ExtractRotation();
-        transform.localPosition = matrix.ExtractPosition();
+        public static void FromMatrix(this Transform transform, Matrix4x4 matrix)
+        {
+            transform.localScale = matrix.ExtractScale();
+            transform.localRotation = matrix.ExtractRotation();
+            transform.localPosition = matrix.ExtractPosition();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ROSUnityCore.ROSBridgeLib;
 using ROSUnityCore.ROSBridgeLib.nav_msgs;
+using ROSUnityCore.Utils;
 using SimpleJSON;
 using UnityEngine;
 

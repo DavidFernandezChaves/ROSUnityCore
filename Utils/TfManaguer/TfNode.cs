@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace ROSUnityCore {
+namespace ROSUnityCore.Utils {
     public class TfNode : MonoBehaviour {
 
         private void Start() {
-            TFSystem.instance.RegisterNode(transform);        
+            TFSystem.instance.RegisterNode(this.transform);        
         }
     }
 }

@@ -42,21 +42,6 @@ namespace ROSUnityCore {
                     _size = size;
                 }
 
-                public SemanticObjectMsg(SemanticObject obj) {
-                    _id = obj.Id;
-                    _scores = new ObjectHypothesisMsg[obj.Scores.Count];
-                    int i = 0;
-                    foreach(KeyValuePair<string,float> score in obj.Scores) {
-                        _scores[i] = new ObjectHypothesisMsg(score.Key, score.Value);
-                        i++;
-                    }
-                    _pose = new PoseMsg(obj.Position, obj.Rotation);
-                    _detections = obj.NDetections;
-                    _roomId = obj.GetIdRoom();
-                    _roomType = obj.Room.roomType;
-                    _size = new Vector3Msg(obj.Size);
-                }
-
                 public Dictionary<string,float> GetScores() {
                     Dictionary<string, float> result = new Dictionary<string, float>();
                     foreach(ObjectHypothesisMsg score in _scores) {

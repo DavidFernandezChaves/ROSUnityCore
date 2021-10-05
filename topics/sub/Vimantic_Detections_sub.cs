@@ -2,6 +2,7 @@
 using UnityEngine;
 using SimpleJSON;
 using ROSUnityCore.ROSBridgeLib.ViMantic_msgs;
+using ViMantic;
 
 namespace ROSUnityCore {
 

@@ -6,18 +6,26 @@ using System.Collections.Generic;
 using ROSUnityCore.ROSBridgeLib.std_msgs;
 using System;
 
-namespace ROSUnityCore {
+namespace ROSUnityCore.Utils {
 
     public class TFSystem : MonoBehaviour {
-
         
         public static TFSystem instance;
-        public int verbose;
-        public List<ROS> clients { get; private set; }
-        
-        public float updateRate = 1f;
 
-        private List<Transform> tfNodes;
+        [Header("General")]
+        [Tooltip("The log level to use")]
+        public LogLevel LogLevel = LogLevel.Normal;
+        
+        [Range(0.01f,5)]
+        public float updateRate = 0.5f;
+
+        [SerializeField]
+        private List<ROS> clients;
+
+        [SerializeField]
+        private List<Transform> tfNodesRegistered;
+
+
         private char[] specialChar = { '/', ' ' };
 
         #region Unity Functions
@@ -29,7 +37,7 @@ namespace ROSUnityCore {
                 Destroy(gameObject);
             }
 
-            tfNodes = new List<Transform>();
+            tfNodesRegistered = new List<Transform>();
             clients = new List<ROS>();
             StartCoroutine(SendTfs());
         }
@@ -125,27 +133,19 @@ namespace ROSUnityCore {
             int n = 0;
             string newName = tf.name + "_" + n;
 
-            while (tfNodes.Find(T => T.name.Equals(newName)) != null)
+            while (tfNodesRegistered.Find(T => T.name.Equals(newName)) != null)
             {
                 n++;
                 newName = tf.name + "_" + n;
             }
 
             tf.name = newName;
-            tfNodes.Add(tf);
+            tfNodesRegistered.Add(tf);
                      
-            Log(tf.name + "Registered.");
+            Log(tf.name + "Registered.",LogLevel.Normal);
             return true;
         }
 
-        //public void CheckClients() {
-        //    clients = new List<ROS>(FindObjectsOfType<ROS>());
-
-        //    foreach (ROS ros in clients) {
-        //        ros.RegisterSubPackage("Tf_sub");
-        //        ros.RegisterPubPackage("Tf_pub");
-        //    }
-        //}
         #endregion
 
 
@@ -154,7 +154,7 @@ namespace ROSUnityCore {
             while (Application.isPlaying) {
                 foreach (ROS ros in clients) {
                     List<TransformStampedMsg> _transforms = new List<TransformStampedMsg>();
-                    foreach (Transform tf in tfNodes) {
+                    foreach (Transform tf in tfNodesRegistered) {
                         if (tf != null) {
                             string parent_name = "map";
                             if(tf.parent != null) {
@@ -164,7 +164,7 @@ namespace ROSUnityCore {
                                                                     parent_name),
                                                                     tf.name, new TransformMsg(tf)));
                         } else {
-                            tfNodes.Remove(tf);
+                            tfNodesRegistered.Remove(tf);
                         }
 
                     }
@@ -172,21 +172,25 @@ namespace ROSUnityCore {
                     TFMsg msg = new TFMsg(_transforms.ToArray());
                     ros.Publish(Tf_pub.GetMessageTopic(), msg);
                 }
-                Log("Tfs updated.");
+                Log("Tfs updated.",LogLevel.Developer);
                 yield return new WaitForSeconds(updateRate);
             }
         }
 
-        private void Log(string _msg) {
-            if (verbose > 1)
-                Debug.Log("[TFController]: " + _msg);
+        private void Log(string _msg, LogLevel lvl, bool Warning = false)
+        {
+            if (LogLevel <= lvl)
+            {
+                if (Warning)
+                {
+                    Debug.LogWarning("[TFController]: " + _msg);
+                }
+                else
+                {
+                    Debug.Log("[TFController]: " + _msg);
+                }
+            }
         }
-
-        private void LogWarning(string _msg) {
-            if (verbose > 0)
-                Debug.LogWarning("[TFController]: " + _msg);
-        }
-
         #endregion
     }
 }
