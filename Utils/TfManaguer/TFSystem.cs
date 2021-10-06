@@ -67,7 +67,7 @@ namespace ROSUnityCore.Utils {
                     if (go == null) {
                         CreateTf(nameTf, nameParent, tf.Gettransform());
                     } else {
-                        if (go.transform.parent == null) {
+                        if (go.transform.parent.name != nameParent) {
                             GameObject parent = GameObject.Find(nameParent);
                             if (parent == null) {
                                 go.transform.parent = CreateTf(nameParent);
@@ -147,7 +147,6 @@ namespace ROSUnityCore.Utils {
         }
 
         #endregion
-
 
         #region Private Functions
         IEnumerator SendTfs() {
