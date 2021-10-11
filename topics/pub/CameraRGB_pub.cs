@@ -5,7 +5,7 @@ namespace ROSUnityCore {
     public class CameraRGB_pub : ROSBridgePublisher {
 
         public new static string GetMessageTopic() {
-            return "/RobotAtVirtualHome/VirtualCameraRGBD";
+            return "/RobotAtVirtualHome/VirtualCameraRGB";
         }
 
         public new static string GetMessageType() {

@@ -5,7 +5,7 @@ namespace ROSUnityCore {
     public class CameraDepth_pub : ROSBridgePublisher {
 
         public new static string GetMessageTopic() {
-            return "/RobotAtVirtualHome/cameraDepth";
+            return "/RobotAtVirtualHome/VirtualCameraDepth";
         }
 
         public new static string GetMessageType() {
