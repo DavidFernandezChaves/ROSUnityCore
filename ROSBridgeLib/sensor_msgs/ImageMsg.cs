@@ -42,19 +42,6 @@ namespace ROSUnityCore {
                     _data = data;
                 }
 
-                public ImageMsg(HeaderMsg header, uint width, uint height, Texture2D data) {
-
-                    _header = header;
-                    _width = width;
-                    _height = height;
-                    _encoding = "rgb8";
-                    _is_bigendian = new byte();
-                    _step = width;
-
-                    _data = new byte[3 * width * height];
-
-                }
-
                 public static string GetMessageType() {
                     return "sensor_msgs/Image";
                 }
