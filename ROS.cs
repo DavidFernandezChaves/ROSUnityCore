@@ -54,11 +54,13 @@ namespace ROSUnityCore {
             }
         }
 
-        public void Connect(string ip, int port = 9090) {
-            this.ip = ip;
-            autoConnect = false;
+        public void Connect(string _ip="", int port = 9090) {
+            if (_ip != "")
+            {
+                this.ip = _ip;
+            }
 
-            ros = new ROSBridgeWebSocketConnection("ws://" + ip, port);
+            ros = new ROSBridgeWebSocketConnection("ws://" + _ip, port);
             Log("Connecting...",LogLevel.Developer);
             ros.AddSubscriber(Type.GetType(pathClass + "Client_Count_sub"));
             if (LogLevel == LogLevel.Developer) {
@@ -68,7 +70,7 @@ namespace ROSUnityCore {
             try {
                 ros.Connect();
             } catch {
-                Log("Fault when connecting to " + ip,LogLevel.Error,true);
+                Log("Fault when connecting to " + _ip,LogLevel.Error,true);
                 Destroy(this.gameObject);
             }
 
